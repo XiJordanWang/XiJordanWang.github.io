@@ -145,6 +145,29 @@ form.msg input, form.msg textarea { font: 400 1rem var(--body); color: var(--ink
 form.msg textarea { min-height: 100px; resize: vertical }
 footer { position: relative; z-index: 1; text-align: center; font: 400 1.05rem var(--term); color: var(--muted); padding-block: 0 28px }
 
+
+/* ---- compact fit: one screen on a laptop ---- */
+body { font-size: 15px; line-height: 1.5 }
+.game { padding-block: 18px 24px; gap: 14px; grid-template-columns: minmax(0, 1fr) 240px }
+.win { padding: 14px 18px }
+.win + .win { margin-top: 12px }
+.screen .win:first-child { margin-top: 12px }
+.win h2, .label { font-size: .85rem; margin-bottom: 8px }
+.party { grid-template-columns: 88px minmax(0, 1fr) minmax(0, 230px); gap: 16px }
+.portrait { width: 88px }
+.party h1 { font-size: clamp(1.4rem, 2.6vw, 1.8rem); margin-bottom: 2px }
+.lv { margin-top: 4px; font-size: 1.2rem }
+.gauges { gap: 6px }
+.g { grid-template-columns: 48px 1fr; font-size: 1.05rem }
+.g .v { font-size: .9rem; line-height: 1.05; margin-top: -2px }
+.lede { font-size: 1rem }
+.cols ul { gap: 4px !important }
+.cmd button { padding-block: 4px; font-size: 1rem }
+.btns { gap: 6px } .btn { padding: 6px 10px }
+.info { font-size: 1.15rem; gap: 4px }
+.help { font-size: 1.1rem }
+@media (min-width: 1100px) { .quests { grid-template-columns: 1fr 1fr; gap: 18px } .quests p { font-size: .9rem } .demo canvas { height: 100px } }
+@media (max-height: 760px) and (min-width: 861px) { .side .info-win { display: none } }
 @media (prefers-reduced-motion: reduce) { .orb, .cmd button::before { animation: none !important } }
 </style>
 
@@ -172,8 +195,8 @@ footer { position: relative; z-index: 1; text-align: center; font: 400 1.05rem v
     <section class="screen" id="s-profile" data-help="Who I am and what I'm looking for.">
       <div class="win">
         <h2>Status</h2>
-        <p class="lede">Software engineer with seven years of production backend and full-stack work across automotive, finance, education and agritech, now completing an MSc in Computer Science at the University of Waikato and building applied AI on top of the systems I know best: connected vehicles and enterprise asset data.</p>
-        <div class="cols" style="margin-top:16px">
+        <p class="lede">Software engineer with seven years of backend and full-stack experience, now doing an MSc in Computer Science at Waikato and building applied AI for connected vehicles and enterprise asset data.</p>
+        <div class="cols" style="margin-top:12px">
           <div>
             <div class="label">Abilities</div>
             <ul style="margin:0;padding-left:18px;display:grid;gap:6px">
@@ -309,7 +332,7 @@ footer { position: relative; z-index: 1; text-align: center; font: 400 1.05rem v
     <div class="win info info-win">
       <div class="row"><span>Time</span><span id="playtime">–</span></div>
       <div class="row"><span>Since</span><span>2016</span></div>
-      <div class="row"><span>Map</span><span>Waikato</span></div>
+      <div class="row"><span>Map</span><span>Hamilton</span></div>
     </div>
     <div class="win"><div class="help" id="help" aria-live="polite"></div></div>
   </aside>
