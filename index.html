@@ -8,7 +8,7 @@
 <meta name="description" content="Xi (Jordan) Wang: software engineer and MSc Computer Science student at the University of Waikato, building applied AI systems.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen&family=Rubik:wght@400;500;700&family=VT323&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Saira:wght@400;500;600&family=Share+Tech+Mono&display=swap">
 <style>
 /* Layout: a retro RPG pause menu. Party card + content window on the left, command menu and info windows on the right. */
 :root {
@@ -148,7 +148,8 @@ footer { position: relative; z-index: 1; text-align: center; font: 400 1.05rem v
 
 /* ---- compact fit: one screen on a laptop ---- */
 body { font-size: 15px; line-height: 1.5 }
-.game { padding-block: 18px 24px; gap: 14px; grid-template-columns: minmax(0, 1fr) 240px }
+.game { padding-block: 18px 24px; gap: 14px }
+@media (min-width: 861px) { .game { grid-template-columns: minmax(0, 1fr) 240px } }
 .win { padding: 14px 18px }
 .win + .win { margin-top: 12px }
 .screen .win:first-child { margin-top: 12px }
@@ -166,9 +167,92 @@ body { font-size: 15px; line-height: 1.5 }
 .btns { gap: 6px } .btn { padding: 6px 10px }
 .info { font-size: 1.15rem; gap: 4px }
 .help { font-size: 1.1rem }
+
+.party { grid-template-columns: 88px minmax(0, 1fr) minmax(0, 330px) }
+.g { grid-template-columns: 62px minmax(0, 1fr) 118px; gap: 10px }
+.g .v { grid-column: auto; margin-top: 0; white-space: nowrap; font-size: 1rem }
+@media (max-width: 680px) { .party { grid-template-columns: 84px minmax(0, 1fr) } .g { grid-template-columns: 56px minmax(0, 1fr) 104px } }
 @media (min-width: 1100px) { .quests { grid-template-columns: 1fr 1fr; gap: 18px } .quests p { font-size: .9rem } .demo canvas { height: 100px } }
 @media (max-height: 760px) and (min-width: 861px) { .side .info-win { display: none } }
 @media (prefers-reduced-motion: reduce) { .orb, .cmd button::before { animation: none !important } }
+
+/* ===== handheld RPG main-menu layout ===== */
+:root {
+  --void: #0B0C24; --panel-a: #3A41A0; --panel-b: #191D5E; --panel-line: #C7CCF5; --box: #0F1240; --box-line: #6E76C8;
+  --ink: #FFFFFF; --muted: #AEB4E6; --gold: #FFFFFF; --tagbg: #0D0F33; --hp: #7FE0FF; --mp: #8FB4FF; --alert: #FF6B73;
+  --pixel: "Saira Condensed", "Arial Narrow", sans-serif; --body: "Saira", "Segoe UI", system-ui, sans-serif; --term: "Share Tech Mono", ui-monospace, monospace;
+}
+body { background: radial-gradient(1200px 700px at 70% 20%, #2B2F86 0%, #14164A 45%, var(--void) 100%) }
+#stars { opacity: .5 }
+.game { grid-template-columns: 220px minmax(0, 1fr) !important; grid-template-areas: "top top" "side main" "help help"; gap: 12px 16px; padding-block: 14px 18px }
+.topbar { grid-area: top } main { grid-area: main; min-width: 0 } .side { grid-area: side } .helpbar { grid-area: help }
+@media (max-width: 860px) { .game { grid-template-columns: 1fr !important; grid-template-areas: "top" "side" "main" "help" } }
+.topbar, .helpbar { display: flex; align-items: center; gap: 16px; background: linear-gradient(180deg, #06072A, #10134A); border-top: 1px solid var(--box-line); border-bottom: 1px solid var(--box-line); min-height: 38px; padding: 0 16px 0 0; min-width: 0 }
+.topbar .t, .helpbar .t { align-self: stretch; display: flex; align-items: center; padding: 0 34px 0 16px; background: linear-gradient(180deg, #2C3290, #151859); clip-path: polygon(0 0, 100% 0, calc(100% - 22px) 100%, 0 100%);
+  font: 600 1.25rem var(--pixel); letter-spacing: .14em; color: #E9ECFF }
+.helpbar .t { font-size: .95rem }
+.topbar .sub { margin-left: auto; font: 500 .92rem var(--pixel); letter-spacing: .08em; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0 }
+.helpbar .help { font: 400 1rem var(--body); color: var(--ink); min-height: 0 }
+.win { background: linear-gradient(180deg, var(--panel-a), var(--panel-b)); border: 2px solid var(--panel-line); border-radius: 12px; box-shadow: inset 0 0 0 1px #0B0D3A, 0 8px 24px rgba(0,0,0,.5); padding: 14px 18px }
+.win h2, .label { font: 600 1rem var(--pixel); letter-spacing: .14em; color: var(--ink); text-shadow: none; text-transform: uppercase }
+.win p, .win li, .party h1, .cmd button, .quest h3, .detail h3, .slot header, .edu h3, .log ol button b { text-shadow: 0 1px 0 rgba(0,0,0,.5) }
+/* command menu */
+.cmd { padding: 18px 14px; border-radius: 12px }
+.cmd ul { gap: 4px }
+.cmd button { font: 500 1.3rem var(--pixel); letter-spacing: .02em; padding: 4px 6px 4px 40px; color: var(--ink) }
+.cmd button:not([aria-current="true"]) { color: #D9DCF7 }
+.cmd button:hover { background: rgba(255,255,255,.06) }
+.cmd button[aria-current="true"]::before, .cmd button:focus-visible::before { left: 4px; width: 28px; height: 16px;
+  background: linear-gradient(90deg, #fff 0 60%, transparent 60%) no-repeat left center/100% 4px, none;
+  clip-path: polygon(0 35%, 62% 35%, 62% 0, 100% 50%, 62% 100%, 62% 65%, 0 65%); background: #fff; filter: drop-shadow(0 0 4px rgba(160,190,255,.9)) }
+@media (max-width: 860px) { .cmd button { font-size: 1.05rem } }
+.btns { gap: 8px } .btn { border: 1px solid var(--box-line); border-radius: 6px; background: var(--box); font: 600 .9rem var(--pixel); letter-spacing: .12em; text-shadow: none }
+.btn:hover { border-color: #fff; color: #fff; background: #1C2170 }
+/* status panel */
+.party { display: grid; grid-template-columns: 104px minmax(0, 1fr) 150px; grid-template-areas: "pic mid right" "info info info"; gap: 12px 16px; align-items: start; border-radius: 12px; background: linear-gradient(180deg, #B9BEEA, #8E95D6); border-color: #E6E8FF; color: #fff; padding: 14px }
+.party .portrait { grid-area: pic; width: 104px; border: 2px solid #0B0D3A; border-radius: 4px; box-shadow: none; background: var(--gb-light) }
+.party .portrait img { border-radius: 0; transform: none }
+.p-mid { grid-area: mid; display: grid; gap: 5px; min-width: 0 }
+.namebar { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; background: linear-gradient(90deg, #0B0D3A, #1B1F63); padding: 2px 14px; border-radius: 3px }
+.namebar h1 { font: 600 1.35rem/1.3 var(--pixel); letter-spacing: .06em; margin: 0; text-shadow: none }
+.namebar .lvl { font: 600 1.15rem var(--pixel); letter-spacing: .08em; white-space: nowrap }
+.stat { display: grid; grid-template-columns: 78px minmax(0, 1fr); align-items: center }
+.tg { display: inline-flex; align-items: center; height: 22px; padding: 0 16px 0 8px; background: var(--tagbg); color: #fff; font: 600 .82rem var(--pixel); letter-spacing: .12em; text-transform: uppercase;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%); border-radius: 3px 0 0 3px; white-space: nowrap }
+.stat .tg { background: linear-gradient(90deg, #12156A, #2E3AB2) }
+.box { display: flex; align-items: center; justify-content: flex-end; gap: 10px; min-height: 24px; background: linear-gradient(180deg, #FFFFFF, #DCDFF6); color: #141850; border: 1px solid #0B0D3A; border-radius: 3px;
+  margin-left: -10px; padding: 0 12px 0 18px; font: 400 1.05rem var(--term); min-width: 0; white-space: nowrap; overflow: hidden }
+.box .bar { flex: 1; height: 6px; border: 1px solid #6E76C8; background: #0B0D3A; border-radius: 0; transform: none }
+.box .bar i { box-shadow: none }
+.p-right { grid-area: right; margin: 0; display: grid; grid-template-columns: 1fr auto; gap: 3px 10px; padding: 8px 12px; background: linear-gradient(180deg, #E9EBFB, #C9CDF0); border: 1px solid #0B0D3A; border-radius: 3px; color: #2A35A0;
+  border-left: 2px dashed #0B0D3A }
+.p-right dt { font: 600 .9rem var(--pixel); letter-spacing: .08em } .p-right dd { margin: 0; font: 400 1.05rem var(--term); color: #141850; text-align: right }
+.p-info { grid-area: info; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px }
+.ib { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: linear-gradient(180deg, #1D2270, #101348); border: 1px solid #0B0D3A; border-radius: 4px; padding-right: 14px; min-height: 30px; min-width: 0; overflow: hidden }
+.ib .tg { height: 30px; background: linear-gradient(90deg, #0B0D3A, #232985); font-size: .95rem }
+.ib span:last-child { font: 400 1.05rem var(--term); white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+@media (max-width: 760px) { .party { grid-template-columns: 84px minmax(0, 1fr); grid-template-areas: "pic mid" "right right" "info info" } .party .portrait { width: 84px } .p-right { grid-template-columns: repeat(5, auto 1fr); border-left: 1px solid #0B0D3A } .p-info { grid-template-columns: 1fr 1fr } .ib.wide { grid-column: 1 / -1 } }
+@media (max-width: 460px) { .p-right { grid-template-columns: repeat(3, auto 1fr) } }
+/* content */
+.screen .win:first-child { margin-top: 12px }
+.tag { font: 600 .72rem var(--pixel); letter-spacing: .12em; background: var(--tagbg); color: #fff; border: 1px solid var(--box-line); border-radius: 3px }
+.quest h3, .detail h3, .edu h3 { font: 600 1.15rem var(--pixel); letter-spacing: .04em }
+.chips span { font: 400 .85rem/1 var(--term); border-radius: 3px; border-color: var(--box-line); background: var(--box); padding: 5px 8px }
+.demo, .slot { background: rgba(11,13,58,.6); border-color: var(--box-line); border-radius: 6px }
+.readout { font: 400 .95rem var(--term) } .readout b { color: var(--hp) } .events { font: 400 .85rem/1.4 var(--term) } .trace { font: 400 .82rem/1.5 var(--term); color: var(--hp) } .cites { font: 400 .8rem var(--term) }
+.qs button { font: 500 .85rem/1.2 var(--body); border-radius: 3px; border-color: var(--box-line); padding: 5px 9px; background: var(--box) }
+.qs button[aria-pressed="true"] { border-color: #fff; color: #fff; background: #2A31A0 }
+.log ol button span { font: 400 .8rem var(--term) } .log ol button b { font: 600 1.05rem var(--pixel); letter-spacing: .03em }
+.log ol button[aria-current="true"] { background: rgba(255,255,255,.12) } .log ol button[aria-current="true"]::before { color: #fff }
+.detail .where, .edu .when { font: 400 .85rem var(--term); color: var(--hp) }
+.slot header { font: 600 1.05rem var(--pixel); letter-spacing: .05em }
+form.msg label { font: 600 .9rem var(--pixel); letter-spacing: .1em; color: var(--muted) } form.msg input, form.msg textarea { background: var(--box); border-color: var(--box-line) }
+.lede { font-size: .98rem } .cols ul li, .cols p { font-size: .95rem }
+footer { font: 400 .8rem var(--term) }
+.helpbar { position: sticky; bottom: env(safe-area-inset-bottom, 0px); z-index: 4 }
+.screen .win { padding: 12px 16px }
+.topbar .t, .helpbar .t { white-space: nowrap }
+@media (max-width: 560px) { .topbar .sub { display: none } .box { font-size: .9rem; padding-left: 14px; padding-right: 8px } .stat { grid-template-columns: 70px minmax(0, 1fr) } .helpbar .help { font-size: .9rem } }
 </style>
 
 </head>
@@ -176,18 +260,24 @@ body { font-size: 15px; line-height: 1.5 }
 <canvas id="stars" aria-hidden="true"></canvas>
 
 <div class="game">
+  <header class="topbar"><span class="t">Main Menu</span><span class="sub">Xi (Jordan) Wang · AI &amp; Software Engineer</span></header>
   <main>
     <section class="win party" aria-label="Profile">
       <div class="portrait"><img src="avatar.png" alt="Pixel-art portrait of Jordan" width="112" height="112"></div>
-      <div>
-        <h1>Xi (Jordan) Wang</h1>
-        <div class="cls">AI &amp; Software Engineer</div>
-        <div class="lv"><span><b>LV</b>7</span><span><b>BASE</b>Hamilton, NZ</span></div>
+      <div class="p-mid">
+        <div class="namebar"><h1>Xi (Jordan) Wang</h1><span class="lvl">Lv. 7</span></div>
+        <div class="stat"><span class="tg">EXP</span><span class="box"><span class="bar ex"><i id="msc-bar" style="width:30%"></i></span><span id="msc-txt">MSc 30%</span></span></div>
+        <div class="stat"><span class="tg">SPRINT</span><span class="box"><span>100% on time</span></span></div>
+        <div class="stat"><span class="tg">TEAM</span><span class="box"><span>10 engineers led</span></span></div>
+        <div class="stat"><span class="tg">LANG</span><span class="box"><span>EN / Mandarin</span></span></div>
       </div>
-      <div class="gauges">
-        <div class="g"><span class="k">EXP</span><div class="bar ex"><i id="msc-bar" style="width:30%"></i></div><span class="v" id="msc-txt">MSc CS · Waikato · to Oct 2027</span></div>
-        <div class="g"><span class="k">COST</span><div class="bar"><i style="width:20%"></i></div><span class="v">−20% operating costs at IBM</span></div>
-        <div class="g"><span class="k">SPEED</span><div class="bar mp"><i style="width:30%"></i></div><span class="v">−30% data latency on SAP link</span></div>
+      <dl class="p-right">
+        <dt>ROLES</dt><dd>5</dd><dt>YEARS</dt><dd>7</dd><dt>MENTEES</dt><dd>4</dd><dt>QUESTS</dt><dd>2</dd><dt>LANGS</dt><dd>2</dd>
+      </dl>
+      <div class="p-info">
+        <div class="ib wide"><span class="tg">Base</span><span>Hamilton, New Zealand</span></div>
+        <div class="ib"><span class="tg">Since</span><span>2016</span></div>
+        <div class="ib"><span class="tg">Time</span><span id="playtime">–</span></div>
       </div>
     </section>
 
@@ -200,10 +290,10 @@ body { font-size: 15px; line-height: 1.5 }
           <div>
             <div class="label">Abilities</div>
             <ul style="margin:0;padding-left:18px;display:grid;gap:6px">
-              <li>Led a 10-person Agile team at IBM for BMW Brilliance Automotive.</li>
-              <li>Built the backend of a connected-vehicle telematics platform at Neusoft.</li>
-              <li>Full stack: Java/Spring Boot, React/Vue, PostgreSQL, Kafka, Docker, Kubernetes.</li>
-              <li>Mentored four junior developers. Bilingual in English and Mandarin.</li>
+              <li>Led a 10-person Agile team at IBM for BMW Brilliance.</li>
+              <li>Built a connected-vehicle telematics backend at Neusoft.</li>
+              <li>Java/Spring Boot, React, PostgreSQL, Kafka, Kubernetes.</li>
+              <li>Mentored four junior developers.</li>
             </ul>
           </div>
           <div>
@@ -329,13 +419,8 @@ body { font-size: 15px; line-height: 1.5 }
       <a class="btn" href="https://github.com/XiJordanWang">GitHub</a>
       <a class="btn" href="https://www.linkedin.com/in/xi-jordan-wang">LinkedIn</a>
     </div>
-    <div class="win info info-win">
-      <div class="row"><span>Time</span><span id="playtime">–</span></div>
-      <div class="row"><span>Since</span><span>2016</span></div>
-      <div class="row"><span>Map</span><span>Hamilton</span></div>
-    </div>
-    <div class="win"><div class="help" id="help" aria-live="polite"></div></div>
   </aside>
+  <div class="helpbar"><span class="t">Help</span><span class="help" id="help" aria-live="polite"></span></div>
 </div>
 <footer>© 2026 Xi (Jordan) Wang · Built by hand, hosted on GitHub Pages</footer>
 
@@ -359,7 +444,7 @@ body { font-size: 15px; line-height: 1.5 }
   const m0 = new Date(2026, 6, 1), m1 = new Date(2027, 9, 31);
   const pct = Math.max(0, Math.min(100, (now - m0) / (m1 - m0) * 100));
   document.getElementById('msc-bar').style.width = pct.toFixed(0) + '%';
-  document.getElementById('msc-txt').textContent = `MSc CS · Waikato · ${pct.toFixed(0)}% to Oct 2027`;
+  document.getElementById('msc-txt').textContent = `MSc ${pct.toFixed(0)}%`;
 
   /* menu routing */
   const help = document.getElementById('help');
@@ -423,7 +508,7 @@ body { font-size: 15px; line-height: 1.5 }
   function drawTele() { const d = devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight; if (!w) return;
     if (cv.width !== w * d) { cv.width = w * d; cv.height = h * d; } cx.setTransform(d, 0, 0, d, 0, 0); cx.clearRect(0, 0, w, h);
     const y = v => h - 10 - (Math.min(104, Math.max(80, v)) - 80) / 24 * (h - 20);
-    cx.strokeStyle = 'rgba(185,196,242,.25)'; cx.fillStyle = '#B9C4F2'; cx.font = '14px VT323, monospace';
+    cx.strokeStyle = 'rgba(185,196,242,.25)'; cx.fillStyle = '#B9C4F2'; cx.font = '11px Share Tech Mono, monospace';
     [85, 95].forEach(g => { cx.beginPath(); cx.moveTo(0, y(g)); cx.lineTo(w, y(g)); cx.stroke(); cx.fillText(g + '°', 2, y(g) - 3); });
     const dx = w / (N - 1); cx.strokeStyle = css('--hp'); cx.lineWidth = 2; cx.beginPath();
     data.forEach((v, k) => k ? cx.lineTo(k * dx, y(v)) : cx.moveTo(0, y(v))); cx.stroke();
