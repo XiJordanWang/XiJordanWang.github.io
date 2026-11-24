@@ -1,0 +1,720 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Xi (Jordan) Wang</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Xi (Jordan) Wang: software engineer and MSc Computer Science student at the University of Waikato, building applied AI systems.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one 1040px column; a mono "signal" rail of dates down the left of experience; projects as two live demo panels. */
+:root {
+  --bg: #0F0A16; --surface: #1A1224; --ink: #F6EEF4; --muted: #B3A3B8; --line: #2E2238;
+  --accent: #FF5E8E; --accent-soft: #3A1830; --signal: #FFB347; --alert: #FF6B73; --ok: #5CC497;
+  --glow: rgba(255,94,142,.20); --poster: "Anton", "Impact", "Arial Narrow", sans-serif;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: dark;
+}
+html { overflow-x: clip }
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font: 400 17px/1.6 var(--body); }
+.wrap { max-width: 1040px; margin: 0 auto; padding-block: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+a { color: var(--accent); text-underline-offset: 3px }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; line-height: 1.15 }
+h2 { font-size: 1.7rem; font-weight: 700 }
+h3 { font-size: 1.15rem; font-weight: 700 }
+p { margin: 0 }
+.mono { font-family: var(--mono); font-size: .8rem; letter-spacing: .02em }
+.label { font-family: var(--mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted) }
+
+/* nav */
+nav.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px); border-bottom: 1px solid var(--line) }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg) }
+nav.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px }
+nav.top .brand { font-family: var(--mono); font-size: .85rem; color: var(--ink); text-decoration: none; font-weight: 500 }
+nav.top ul { display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; font-size: .95rem }
+nav.top ul a { color: var(--muted); text-decoration: none }
+nav.top ul a:hover { color: var(--ink) }
+@media (max-width: 640px) { nav.top ul li.opt { display: none } nav.top ul { gap: 14px } }
+
+/* hero */
+header.hero { padding-block: 56px 32px }
+.hero .kicker { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-bottom: 20px }
+.hero .kicker span::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--signal); margin-right: 8px; vertical-align: 1px }
+.hero h1 { font-size: clamp(2.6rem, 7vw, 4.6rem); font-weight: 700; letter-spacing: -.025em }
+.hero h1 .cn { color: var(--muted); font-weight: 500 }
+.hero .lede { font-size: clamp(1.1rem, 2.2vw, 1.35rem); max-width: 40ch; margin-top: 20px; color: var(--ink) }
+.hero .lede em { font-style: normal; color: var(--accent) }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 8px; font: 600 .95rem var(--body);
+  text-decoration: none; border: 1px solid var(--line); color: var(--ink); background: var(--surface); cursor: pointer }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bg) }
+.btn:hover { border-color: var(--accent) }
+.btn svg { width: 16px; height: 16px; fill: currentColor }
+
+/* two-column shell: sticky identity column on the left, scrolling content on the right */
+.shell { max-width: 1200px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+.shell main { min-width: 0 }
+.shell section .wrap { padding-left: 0; padding-right: 0; max-width: none }
+.side-nav { display: none }
+@media (min-width: 99999px) {
+  nav.top { display: none }
+  .shell { display: grid; grid-template-columns: minmax(0, 400px) minmax(0, 1fr); gap: 72px }
+  .side { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; padding-block: 80px 48px; overflow-y: auto }
+  .hero h1 { font-size: 3.2rem }
+  .hero .kicker { flex-direction: column; gap: 6px }
+  .side-nav { display: grid; gap: 4px; list-style: none; padding: 0; margin: 40px 0 0 }
+  .side-nav a { display: flex; align-items: center; gap: 14px; padding-block: 8px; color: var(--muted); text-decoration: none;
+    font: 500 .78rem var(--mono); text-transform: uppercase; letter-spacing: .14em }
+  .side-nav a::before { content: ""; width: 28px; height: 1px; background: currentColor; transition: width .2s }
+  .side-nav a:hover, .side-nav a.on { color: var(--ink) }
+  .side-nav a:hover::before, .side-nav a.on::before { width: 64px; background: var(--accent) }
+  .actions { margin-top: auto; padding-top: 32px }
+  main .facts { margin-top: 80px }
+  .shell .projects { grid-template-columns: 1fr }
+  #education .cols { gap: 32px }
+}
+@media (prefers-reduced-motion: reduce) { .side-nav a::before { transition: none } }
+
+/* ---- richer variant ---- */
+header.hero { position: relative; min-height: min(820px, 92vh); display: flex; flex-direction: column; justify-content: center; padding-block: 96px 56px; isolation: isolate }
+#net { position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); z-index: -1; opacity: .9 }
+header.hero::after { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); z-index: -1;
+  background: radial-gradient(55% 70% at 22% 50%, color-mix(in srgb, var(--bg) 80%, transparent), transparent 75%), linear-gradient(transparent 75%, var(--bg)); pointer-events: none }
+nav.top .wrap { max-width: 1200px }
+.hello { color: var(--signal); font-size: .95rem; margin-bottom: 14px }
+.hero h1 { font-size: clamp(2.8rem, 8vw, 5.4rem) }
+.rot { font: 600 clamp(1.5rem, 4vw, 2.6rem)/1.2 var(--display); color: var(--muted); margin-top: 10px; min-height: 1.3em }
+.rot #rot { background: linear-gradient(90deg, var(--accent), var(--signal)); -webkit-background-clip: text; background-clip: text; color: transparent }
+.caret { display: inline-block; width: 3px; height: .9em; background: var(--signal); margin-left: 4px; vertical-align: -0.08em; animation: blink 1s steps(1) infinite }
+@keyframes blink { 50% { opacity: 0 } }
+.btn.primary { box-shadow: 0 0 0 0 var(--glow); transition: box-shadow .2s, transform .2s }
+.btn.primary:hover { box-shadow: 0 0 0 6px var(--glow); transform: translateY(-1px) }
+.proj { transition: transform .25s, border-color .25s, box-shadow .25s }
+.proj:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--accent) 60%, var(--line)); box-shadow: 0 18px 40px -18px var(--glow), 0 0 0 1px var(--glow) }
+.proj .demo { background: radial-gradient(120% 100% at 100% 0%, var(--accent-soft), var(--bg) 60%) }
+.sec-head h2::before { content: attr(data-n); font: 500 .95rem var(--mono); color: var(--signal); margin-right: 12px; vertical-align: .3em }
+.sec-head h2::after { content: ""; display: inline-block; width: min(240px, 25vw); height: 1px; background: var(--line); margin-left: 18px; vertical-align: .35em }
+.roles { position: relative; padding-left: 30px }
+.roles::before { content: ""; position: absolute; left: 6px; top: 6px; bottom: 0; width: 2px; background: linear-gradient(var(--accent), var(--signal) 60%, transparent) }
+.role { position: relative }
+.role::before { content: ""; position: absolute; left: -30px; top: 30px; width: 14px; height: 14px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); box-shadow: 0 0 0 4px var(--glow) }
+.role:first-child::before { top: 4px }
+details.earlier { padding-left: 0 }
+.skillgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px }
+@media (max-width: 860px) { .skillgrid { grid-template-columns: 1fr 1fr } }
+@media (max-width: 560px) { .skillgrid { grid-template-columns: 1fr } }
+.skill { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: grid; gap: 12px; align-content: start; transition: border-color .2s }
+.skill:hover { border-color: var(--accent) }
+.skill header { display: flex; align-items: center; gap: 10px; font: 700 1.02rem var(--display) }
+.skill header svg { width: 26px; height: 26px; padding: 5px; border-radius: 7px; background: var(--accent-soft); stroke: var(--accent); fill: none; stroke-width: 1.8; flex: none }
+.skill .tags span { font-size: .74rem }
+.pre { opacity: 0; transform: translateY(18px) }
+.reveal { transition: opacity .6s ease, transform .6s ease }
+@media (prefers-reduced-motion: reduce) { .caret { animation: none } .proj, .reveal { transition: none } .pre { opacity: 1; transform: none } }
+
+/* ---- cinematic intro ---- */
+.intro { height: 320vh; position: relative; background: var(--bg) }
+.stage { position: sticky; top: 0; height: 100vh; overflow: hidden }
+#scene { position: absolute; inset: 0; width: 100%; height: 100% }
+#mask { position: absolute; inset: 0; width: 100%; height: 100%; transform-origin: 50% 50%; will-change: transform, opacity }
+#mask text { font-family: var(--poster) }
+.cap { position: absolute; left: 0; right: 0; bottom: 12vh; text-align: center; opacity: 0; transform: translateY(20px);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+.cap h1 { font: 400 clamp(3rem, 11vw, 9rem)/.9 var(--poster); text-transform: uppercase; letter-spacing: .01em; color: #FFF6EC; text-shadow: 0 6px 40px rgba(40,0,30,.6) }
+.cap p { font: 500 clamp(.8rem, 1.6vw, 1rem) var(--mono); letter-spacing: .2em; text-transform: uppercase; color: #FFE3C4; margin-top: 14px }
+.hint { position: absolute; left: 50%; bottom: 4vh; transform: translateX(-50%); font: 500 .72rem var(--mono); letter-spacing: .3em; color: var(--muted); text-transform: uppercase }
+.hint::after { content: ""; display: block; width: 1px; height: 28px; background: var(--accent); margin: 10px auto 0; animation: drip 1.6s infinite }
+@keyframes drip { 0% { transform: scaleY(0); transform-origin: top } 50% { transform: scaleY(1); transform-origin: top } 51% { transform-origin: bottom } 100% { transform: scaleY(0); transform-origin: bottom } }
+h2 { font-family: var(--poster) !important; font-weight: 400 !important; text-transform: uppercase; letter-spacing: .01em; font-size: 2.4rem !important }
+.hero h1 { font-family: var(--poster); font-weight: 400; text-transform: uppercase; letter-spacing: .005em }
+@media (prefers-reduced-motion: reduce) { .intro { height: 100vh } .hint::after { animation: none } }
+
+/* stat strip */
+.facts { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: 8px; margin-bottom: 8px }
+.facts div { padding: 18px 16px 18px 0; min-width: 0 }
+.facts div + div { padding-left: 16px; border-left: 1px solid var(--line) }
+.facts b { display: block; font: 700 1.9rem/1.1 var(--display); font-variant-numeric: tabular-nums }
+.facts span { display: block; font-size: .88rem; line-height: 1.4; color: var(--muted); margin-top: 4px }
+@media (max-width: 720px) { .facts { grid-template-columns: 1fr 1fr } .facts div:nth-child(3) { padding-left: 0; border-left: 0 } .facts div:nth-child(n+3) { border-top: 1px solid var(--line) } }
+
+section { padding-block: 56px; border-top: 1px solid var(--line) }
+main > section:first-of-type { border-top: 0 }
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 28px }
+.sec-head p { color: var(--muted); max-width: 52ch }
+
+/* projects */
+.projects { display: grid; grid-template-columns: 1fr 1fr; gap: 20px }
+@media (max-width: 860px) { .projects { grid-template-columns: 1fr } }
+.proj { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; display: flex; flex-direction: column; min-width: 0; overflow: hidden }
+.proj .body { padding: 22px 22px 18px; display: grid; gap: 10px }
+.proj .status { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: .72rem; color: var(--signal); text-transform: uppercase; letter-spacing: .1em }
+.proj .status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor }
+.proj p { color: var(--muted); font-size: .98rem }
+.tags { display: flex; flex-wrap: wrap; gap: 6px }
+.tags span { font-family: var(--mono); font-size: .72rem; padding: 3px 8px; border-radius: 4px; background: var(--accent-soft); color: var(--ink) }
+.demo { border-top: 1px solid var(--line); background: var(--bg); padding: 16px 22px 18px; display: grid; gap: 12px; flex: 1 }
+.demo .bar { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap }
+.proj .links { display: flex; gap: 16px; padding: 14px 22px; border-top: 1px solid var(--line); font-size: .92rem; flex-wrap: wrap }
+.proj .links .soon { color: var(--muted) }
+
+/* telemetry demo */
+.tele canvas { width: 100%; height: 150px; display: block; border-radius: 6px; background: var(--surface); border: 1px solid var(--line) }
+.tele .readout { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px }
+.tele .readout div { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; min-width: 0 }
+.tele .readout b { display: block; font: 500 1.05rem var(--mono); font-variant-numeric: tabular-nums }
+.tele .readout span { font-size: .75rem; color: var(--muted) }
+.events { font-family: var(--mono); font-size: .74rem; display: grid; gap: 4px; min-height: 3.6em; color: var(--muted) }
+.events .hit { color: var(--alert) }
+.chip-btn { font: 500 .75rem var(--mono); border: 1px solid var(--line); background: var(--surface); color: var(--ink); padding: 4px 10px; border-radius: 999px; cursor: pointer }
+.chip-btn:hover { border-color: var(--accent) }
+
+/* asset assistant demo */
+.qs { display: flex; flex-wrap: wrap; gap: 6px }
+.qs .chip-btn[aria-pressed="true"] { background: var(--accent); color: var(--bg); border-color: var(--accent) }
+.answer { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; display: grid; gap: 10px; font-size: .95rem }
+.trace { font-family: var(--mono); font-size: .72rem; color: var(--muted); display: grid; gap: 3px; padding-left: 0; margin: 0; list-style: none }
+.trace li::before { content: "→ "; color: var(--accent) }
+.cites { display: flex; flex-wrap: wrap; gap: 6px }
+.cites span { font-family: var(--mono); font-size: .7rem; border: 1px dashed var(--line); padding: 2px 7px; border-radius: 4px; color: var(--muted) }
+.mock-note { font-size: .78rem; color: var(--muted) }
+
+/* experience */
+.roles { display: grid; gap: 0 }
+.role { display: grid; grid-template-columns: 170px 1fr; gap: 24px; padding-block: 26px; border-top: 1px dashed var(--line) }
+.role:first-child { border-top: 0; padding-top: 0 }
+.role .when { font-family: var(--mono); font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 4px }
+.role .when small { display: block; margin-top: 4px; font-size: .75rem }
+.role .what { min-width: 0 }
+.role .org { color: var(--muted); font-size: .98rem; margin-top: 2px }
+.role ul { margin: 12px 0 0; padding-left: 18px; display: grid; gap: 6px }
+.role li { max-width: 72ch }
+.role li::marker { color: var(--accent) }
+@media (max-width: 640px) { .role { grid-template-columns: 1fr; gap: 6px } }
+details.earlier summary { cursor: pointer; font-weight: 600; color: var(--accent); padding-block: 12px; list-style: none }
+details.earlier summary::-webkit-details-marker { display: none }
+details.earlier summary::before { content: "+ "; font-family: var(--mono) }
+details.earlier[open] summary::before { content: "− " }
+
+/* skills */
+.skills { display: grid; grid-template-columns: 200px 1fr; gap: 0; border-top: 1px solid var(--line) }
+.skills dt, .skills dd { padding-block: 14px; border-bottom: 1px solid var(--line); margin: 0 }
+.skills dt { font-weight: 600 }
+.skills dd { min-width: 0; display: flex; flex-wrap: wrap; gap: 6px 14px; color: var(--muted) }
+@media (max-width: 640px) { .skills { grid-template-columns: 1fr } .skills dt { border-bottom: 0; padding-bottom: 2px } .skills dd { padding-top: 0 } }
+
+/* two column misc */
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 40px }
+@media (max-width: 760px) { .cols { grid-template-columns: 1fr } }
+.edu { display: grid; gap: 22px }
+.edu .item { display: grid; gap: 4px }
+.edu .meta { font-family: var(--mono); font-size: .78rem; color: var(--muted) }
+.edu p { color: var(--muted); font-size: .96rem }
+
+/* contact */
+.contact { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: start }
+@media (max-width: 760px) { .contact { grid-template-columns: 1fr } }
+.contact .lede { font-size: 1.15rem; max-width: 36ch }
+.contact ul { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 10px }
+.contact li { display: flex; gap: 12px; align-items: baseline }
+.contact li .label { width: 80px; flex: none }
+form.msg { display: grid; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px }
+form.msg label { font-size: .85rem; font-weight: 600; display: grid; gap: 4px }
+form.msg input, form.msg textarea { font: 400 1rem var(--body); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 9px 11px; width: 100% }
+form.msg textarea { min-height: 110px; resize: vertical }
+form.msg .note { font-size: .82rem; color: var(--muted) }
+footer { padding-block: 32px 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: .85rem }
+footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap }
+
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important } }
+
+/* print: a clean two-page CV */
+@media print {
+  .intro, #net, .hello, .rot, header.hero::after { display: none !important } header.hero { min-height: 0 !important } .sec-head h2::before, .sec-head h2::after, .roles::before, .role::before { display: none !important } .roles { padding-left: 0 } .skillgrid { grid-template-columns: 1fr 1fr 1fr; gap: 6px } .skill { padding: 6px; gap: 4px; border-radius: 4px } .pre { opacity: 1 !important; transform: none !important }
+  .shell { display: block !important } .side { position: static !important; height: auto !important; padding: 0 !important } .side-nav { display: none !important }
+  @page { size: A4; margin: 14mm 14mm 14mm }
+  :root { --bg: #fff; --surface: #fff; --ink: #111; --muted: #444; --line: #ccc; --accent: #2E49C8; --accent-soft: #eef }
+  body { font-size: 9.6pt; line-height: 1.38 }
+  nav.top, .actions, .demo, .proj .links, .contact form, .no-print, details.earlier summary, body::before { display: none !important }
+  header.hero { padding-block: 0 8px }
+  .hero h1 { font-size: 24pt }
+  .hero .lede { font-size: 11.5pt; max-width: none; margin-top: 6px }
+  .hero .kicker { margin-bottom: 6px }
+  .facts { margin-top: 10px } .facts b { font-size: 14pt } .facts div { padding-block: 6px }
+  section { padding-block: 12px; break-inside: auto }
+  .sec-head { margin-bottom: 8px } h2 { font-size: 13pt } h3 { font-size: 11pt }
+  .sec-head p { display: none }
+  .projects { grid-template-columns: 1fr 1fr; gap: 10px } .proj { break-inside: avoid; border-radius: 4px } .proj .body { padding: 10px; gap: 4px } .proj p { font-size: 9.5pt }
+  .role { grid-template-columns: 120px 1fr; gap: 12px; padding-block: 8px } .role ul { margin-top: 4px; gap: 2px }
+  .skills { grid-template-columns: 150px 1fr } .skills dt, .skills dd { padding-block: 4px }
+  .cols { gap: 20px } .edu { gap: 8px }
+  .contact { display: block } .contact .lede { display: none } .contact ul { margin-top: 0; grid-template-columns: 1fr 1fr }
+  footer { display: none }
+  .facts { grid-template-columns: repeat(4, 1fr) !important } .facts div { border-top: 0 !important; padding-left: 10px !important; border-left: 1px solid var(--line) !important } .facts div:first-child { padding-left: 0 !important; border-left: 0 !important }
+  .cols { grid-template-columns: 1fr 1fr !important } .contact ul { display: flex; gap: 24px }
+  .role .when small { display: inline; margin-left: 6px }
+  a { color: var(--ink); text-decoration: none }
+}
+</style>
+
+</head>
+<body>
+<section class="intro" aria-label="Intro">
+  <div class="stage">
+    <canvas id="scene" aria-hidden="true"></canvas>
+    <svg id="mask" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet" overflow="visible" aria-hidden="true">
+      <defs><mask id="cut" maskUnits="userSpaceOnUse" x="-4000" y="-4000" width="9600" height="8900"><rect x="-4000" y="-4000" width="9600" height="8900" fill="#fff"/><text x="800" y="580" text-anchor="middle" font-size="400" fill="#000">JORDAN</text></mask></defs>
+      <rect x="-4000" y="-4000" width="9600" height="8900" fill="#0F0A16" mask="url(#cut)"/>
+    </svg>
+    <div class="cap" id="cap"><h1>Xi (Jordan) Wang</h1><p>AI &amp; software engineer · Hamilton, NZ</p></div>
+    <div class="hint" id="hint">Scroll</div>
+  </div>
+</section>
+
+<nav class="top" aria-label="Sections">
+  <div class="wrap">
+    <a class="brand" href="#top">xi.jordan.wang</a>
+    <ul>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li class="opt"><a href="#skills">Skills</a></li>
+      <li class="opt"><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="shell" id="top">
+  <header class="hero side">
+    <canvas id="net" aria-hidden="true"></canvas>
+    <div class="kicker label"><span>Hamilton, New Zealand</span><span>MSc Computer Science · Waikato · 2027</span><span>NZ student visa</span></div>
+    <h2 class="hero-name" style="font-size:clamp(2.8rem,8vw,5.4rem)!important;line-height:1">Xi (Jordan) Wang</h2>
+    <p class="rot" aria-label="I build backend platforms, streaming data systems, RAG assistants and AI agents">I build <span id="rot">streaming data systems</span><span class="caret" aria-hidden="true"></span></p>
+    <p class="lede">Software engineer with seven years of production backend and full-stack work, now building <em>applied AI systems</em> on top of the platforms I know best: connected vehicles and enterprise asset data.</p>
+    <ul class="side-nav" aria-label="Sections">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="actions">
+      <a class="btn primary" href="cv.pdf" download>
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 1h2v8.6l2.8-2.8 1.4 1.4L8 13.4 2.8 8.2l1.4-1.4L7 9.6V1zM2 14h12v2H2z"/></svg>Download CV (PDF)</a>
+      <a class="btn" href="https://github.com/XiJordanWang">GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/in/xi-jordan-wang">LinkedIn</a>
+    </div>
+  </header>
+  <main>
+    <div class="facts" aria-label="Career highlights">
+      <div><b>7 yrs</b><span>software engineering in automotive, finance, education and agritech</span></div>
+      <div><b>10</b><span>engineers led at IBM on a BMW Brilliance platform</span></div>
+      <div><b>−20%</b><span>operating costs from redesigned asset workflows</span></div>
+      <div><b>−30%</b><span>data-processing latency on the SAP integration</span></div>
+    </div>
+
+  <section id="projects">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 data-n="01.">Projects</h2>
+        <p>Two flagship builds that bring AI to systems I have shipped in industry. The panels below run in your browser on mock data.</p>
+      </div>
+      <div class="projects">
+
+        <article class="proj" id="proj-telematics">
+          <div class="body">
+            <span class="status">In progress</span>
+            <h3>Fleet telemetry with streaming anomaly detection</h3>
+            <p>A connected-vehicle platform that ingests T-Box telemetry over MQTT and Kafka, scores each signal in real time, and flags faults before a driver notices. Builds on the TSP backend I designed at Neusoft.</p>
+            <div class="tags"><span>Kafka</span><span>MQTT</span><span>Spring Boot</span><span>Python</span><span>Isolation Forest</span><span>Docker</span></div>
+          </div>
+          <div class="demo tele" aria-label="Telemetry demo">
+            <div class="bar"><span class="label">Vehicle NZ-0427 · coolant °C</span><button class="chip-btn" id="tele-toggle" type="button">Pause</button></div>
+            <canvas id="tele-canvas" width="600" height="150" role="img" aria-label="Live chart of mock coolant temperature with anomalies marked"></canvas>
+            <div class="readout">
+              <div><b id="t-now">–</b><span>current °C</span></div>
+              <div><b id="t-z">–</b><span>rolling z-score</span></div>
+              <div><b id="t-n">0</b><span>anomalies flagged</span></div>
+            </div>
+            <div class="events" id="t-events" aria-live="polite"><span>Watching the stream…</span></div>
+            <p class="mock-note">Mock data generated in the browser. The full demo streams a simulated fleet.</p>
+          </div>
+          <div class="links"><a href="https://github.com/XiJordanWang">Code on GitHub</a><span class="soon">Live demo coming soon</span></div>
+        </article>
+
+        <article class="proj" id="proj-assets">
+          <div class="body">
+            <span class="status">In progress</span>
+            <h3>Asset &amp; capex assistant with RAG and an agent</h3>
+            <p>An investment and fixed-asset platform where staff ask questions in plain English. Retrieval grounds every answer in policy documents and asset records, and an agent can draft approvals or verification tasks for a human to confirm.</p>
+            <div class="tags"><span>Spring Boot</span><span>PostgreSQL + pgvector</span><span>RAG</span><span>Tool-calling agent</span><span>React</span></div>
+          </div>
+          <div class="demo" aria-label="Asset assistant demo">
+            <div class="bar"><span class="label">Ask the asset assistant</span></div>
+            <div class="qs" id="qs" role="group" aria-label="Sample questions"></div>
+            <div class="answer" id="answer" aria-live="polite"></div>
+            <p class="mock-note">Canned answers over a fictional company. No real employer data is used.</p>
+          </div>
+          <div class="links"><a href="https://github.com/XiJordanWang">Code on GitHub</a><span class="soon">Live demo coming soon</span></div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap">
+      <div class="sec-head"><h2 data-n="02.">Experience</h2><p>Backend and platform engineering across five companies in China, from 2016 to 2023.</p></div>
+      <div class="roles">
+        <div class="role">
+          <div class="when">Apr 2021 – Nov 2023<small>Shenyang, China</small></div>
+          <div class="what">
+            <h3>Technical Lead</h3><p class="org">IBM · client: BMW Brilliance Automotive</p>
+            <ul>
+              <li>Led a cross-functional Agile team of 10 to build and launch an investment and fixed-asset management platform for BMW Group's joint venture in China, delivering every sprint on schedule.</li>
+              <li>Delivered the full asset lifecycle across multiple production plants and hundreds of suppliers: investment approvals, asset accounting, physical verification, a self-service desk and Tableau reporting.</li>
+              <li>Redesigned accounting and product-line workflows and automated routine tasks, reducing operating costs by 20%.</li>
+              <li>Architected Spring Boot microservices integrating with BMW Group and SAP systems, reducing data-processing latency by 30%.</li>
+              <li>Built CI/CD with Jenkins, Docker and Kubernetes, increasing deployment frequency by 50%.</li>
+              <li>Mentored four junior developers through code review and Git/GitFlow practice.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="role">
+          <div class="when">Mar 2019 – Mar 2021<small>Shenyang, China</small></div>
+          <div class="what">
+            <h3>Senior Backend Engineer</h3><p class="org">Neusoft</p>
+            <ul>
+              <li>Designed and built the backend of an Internet of Vehicles TSP platform connecting in-vehicle T-Boxes to automakers, drivers and third-party services, using Spring Boot, Kafka, MQTT, Redis and MySQL.</li>
+              <li>Developed a remote vehicle control service on Spring Cloud Alibaba, improving response efficiency by 20%.</li>
+              <li>Delivered remote seat heating and remote engine start for Dongfeng Motor Corporation, contributing to an additional 10,000 vehicle sales a year.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="role">
+          <div class="when">Jan 2018 – Mar 2019<small>Shenyang, China</small></div>
+          <div class="what">
+            <h3>Full Stack Java Engineer</h3><p class="org">Shenyang Normal University</p>
+            <ul>
+              <li>Built education management and online examination systems for external clients in a 16-person team, covering services, REST APIs and database design.</li>
+              <li>Backend in Spring and Spring Cloud with MySQL and MongoDB, with React frontends. Tutored undergraduates in Java and software engineering.</li>
+            </ul>
+          </div>
+        </div>
+        <details class="earlier">
+          <summary>Two earlier roles, 2016 – 2018</summary>
+          <div class="role">
+            <div class="when">Mar 2017 – Jan 2018<small>Beijing, China</small></div>
+            <div class="what">
+              <h3>Full Stack Java Engineer</h3><p class="org">Beijing Digital Agricultural Science and Technology</p>
+              <ul>
+                <li>Redesigned the Oracle database for a smart fertigation system using object-oriented design patterns, increasing query efficiency by 30%.</li>
+                <li>Built responsive company-facing pages against RESTful services, deployed on Tomcat.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="role">
+            <div class="when">Apr 2016 – Mar 2017<small>Beijing, China</small></div>
+            <div class="what">
+              <h3>Backend Developer</h3><p class="org">Tianjin Zhongqi Weiye Sports Development</p>
+              <ul>
+                <li>Built the backend of a management platform for competitive board-game players and coaches, redesigning the schema to cut retrieval time by 25–35%.</li>
+                <li>Built access control so users kept control of their personal information, on a REST microservices architecture.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <div class="sec-head"><h2 data-n="03.">Skills</h2></div>
+      <div class="skillgrid">
+        <div class="skill"><header><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M6 18l2-2M16 8l2-2"/><circle cx="12" cy="12" r="4"/></svg>AI &amp; ML</header><div class="tags"><span>Python</span><span>Interpretable ML</span><span>RAG</span><span>LLM agents &amp; tool calling</span><span>Anomaly detection</span><span>AI ethics</span></div></div>
+        <div class="skill"><header><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="16" height="6" rx="1.5"/><path d="M8 7h.01M8 17h.01"/></svg>Backend</header><div class="tags"><span>Java</span><span>Spring Boot</span><span>Spring Cloud</span><span>Spring MVC</span><span>MyBatis</span><span>Django</span><span>REST</span><span>Microservices</span></div></div>
+        <div class="skill"><header><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg>Data &amp; streaming</header><div class="tags"><span>PostgreSQL</span><span>MySQL</span><span>Oracle</span><span>Redis</span><span>MongoDB</span><span>Kafka</span><span>RabbitMQ</span><span>MQTT</span><span>Tableau</span></div></div>
+        <div class="skill"><header><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M9 21h6"/></svg>Frontend</header><div class="tags"><span>JavaScript</span><span>React</span><span>Vue.js</span><span>Next.js</span><span>Angular</span><span>HTML/CSS</span></div></div>
+        <div class="skill"><header><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18h10a4 4 0 0 0 .6-8A6 6 0 0 0 6 9.5 4.3 4.3 0 0 0 7 18z"/></svg>Cloud &amp; DevOps</header><div class="tags"><span>Docker</span><span>Kubernetes</span><span>Jenkins</span><span>OpenShift</span><span>Azure</span><span>Alibaba Cloud</span><span>Git/GitFlow</span></div></div>
+        <div class="skill"><header><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="9" r="3"/><circle cx="16" cy="9" r="3"/><path d="M3 19c.8-3 2.8-4.5 5-4.5s4.2 1.5 5 4.5M11 19c.8-3 2.8-4.5 5-4.5s4.2 1.5 5 4.5"/></svg>Ways of working</header><div class="tags"><span>Agile/Scrum</span><span>Jira</span><span>Confluence</span><span>Code review</span><span>Mentoring</span><span>English &amp; Mandarin</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="wrap cols">
+      <div>
+        <div class="sec-head"><h2 data-n="04.">Education</h2></div>
+        <div class="edu">
+          <div class="item"><span class="meta">Jul 2026 – Oct 2027 (expected)</span><h3>Master of Science in Computer Science</h3><p>The University of Waikato, Hamilton. Papers: Interpretable Machine Learning, Mobile and Wearable Computing, Preparation for Research in Computer Science, Ethics of Artificial Intelligence.</p></div>
+          <div class="item"><span class="meta">2024 – 2026</span><h3>English and postgraduate preparation</h3><p>TOEFL iBT 98. CS50 (Harvard), CS61A/B/C (UC Berkeley), Algorithms Specialisation (Stanford), IBM Full Stack Software Developer Professional Certificate.</p></div>
+          <div class="item"><span class="meta">2016</span><h3>Certified Java Software Engineer</h3><p>Beijing Aptech Beida Jade Bird Information Technology.</p></div>
+          <div class="item"><span class="meta">Degree</span><h3>Bachelor of Management</h3><p>China University of Labour Relations, Beijing.</p></div>
+        </div>
+      </div>
+      <div>
+        <div class="sec-head"><h2>Beyond code</h2></div>
+        <div class="edu">
+          <div class="item"><span class="meta">2015 – 2022</span><h3>Basketball coach</h3><p>Seven years coaching junior and youth teams aged 4–18. Coached a programme for children with autism at Beijing Golden Wings, featured on Beijing Television in 2016.</p></div>
+          <div class="item"><span class="meta">2015</span><h3>Guest service intern, Four Seasons Hotel Beijing</h3><p>Front-of-house care for international guests in English and Mandarin.</p></div>
+          <div class="item"><span class="meta">Interests</span><h3>Basketball, music, the outdoors</h3><p>Eight years' formal basketball training as team captain, accordion (Level 8), guitar and piano, and hiking around the Waikato.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap contact">
+      <div>
+        <h2 data-n="05.">Get in touch</h2>
+        <p class="lede" style="margin-top:12px">Open to AI engineering, backend and full-stack roles in New Zealand, including part-time work during study and graduate roles from late 2027.</p>
+        <ul>
+          <li><span class="label">LinkedIn</span><a href="https://www.linkedin.com/in/xi-jordan-wang">linkedin.com/in/xi-jordan-wang</a></li>
+          <li><span class="label">GitHub</span><a href="https://github.com/XiJordanWang">github.com/XiJordanWang</a></li>
+        </ul>
+      </div>
+      <form class="msg" id="msg-form" novalidate>
+        <label for="f-name">Your name<input id="f-name" name="name" autocomplete="name" required></label>
+        <label for="f-from">Your email<input id="f-from" name="email" type="email" autocomplete="email" required></label>
+        <label for="f-text">Message<textarea id="f-text" name="message" required></textarea></label>
+        <button class="btn primary" type="submit">Send message</button>
+        <p class="note" id="f-note">Messages go straight to Jordan's inbox. Your address is only used to reply.</p>
+      </form>
+    </div>
+  </section>
+  </main>
+</div>
+
+<footer><div class="wrap"><span>© 2026 Xi (Jordan) Wang</span><span>Static site on GitHub Pages</span></div></footer>
+
+<script>
+(function () {
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- telemetry demo ---------- */
+  const cv = document.getElementById('tele-canvas');
+  const ctx = cv.getContext('2d');
+  const N = 120, data = [], flags = [];
+  let base = 88, t = 0, count = 0, running = !reduce, spikeLeft = 0;
+  function next() {
+    t++;
+    base += (88 - base) * 0.05 + (Math.random() - 0.5) * 0.9;
+    if (spikeLeft === 0 && Math.random() < 0.025) spikeLeft = 4 + Math.floor(Math.random() * 4);
+    let v = base + Math.sin(t / 9) * 1.2;
+    if (spikeLeft > 0) { v += 7 + Math.random() * 5; spikeLeft--; }
+    return v;
+  }
+  function zscore(i) {
+    const w = data.slice(Math.max(0, i - 30), i);
+    if (w.length < 10) return 0;
+    const m = w.reduce((a, b) => a + b, 0) / w.length;
+    const sd = Math.sqrt(w.reduce((a, b) => a + (b - m) ** 2, 0) / w.length) || 1;
+    return (data[i] - m) / sd;
+  }
+  const evBox = document.getElementById('t-events');
+  const events = [];
+  function step() {
+    data.push(next());
+    if (data.length > N) { data.shift(); flags.shift(); }
+    const i = data.length - 1, z = zscore(i), hit = z > 3;
+    flags.push(hit);
+    if (hit) {
+      count++;
+      const s = new Date().toLocaleTimeString('en-NZ', { hour12: false });
+      events.unshift(`<span class="hit">${s}  coolant ${data[i].toFixed(1)}°C  z=${z.toFixed(1)}  ALERT</span>`);
+      events.length = Math.min(events.length, 3);
+      evBox.innerHTML = events.join('');
+    }
+    document.getElementById('t-now').textContent = data[i].toFixed(1);
+    document.getElementById('t-z').textContent = z.toFixed(2);
+    document.getElementById('t-n').textContent = count;
+  }
+  function draw() {
+    const dpr = window.devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight;
+    if (cv.width !== w * dpr) { cv.width = w * dpr; cv.height = h * dpr; }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    const lo = 80, hi = 104, y = v => h - 12 - (Math.min(hi, Math.max(lo, v)) - lo) / (hi - lo) * (h - 24);
+    ctx.strokeStyle = css('--line'); ctx.lineWidth = 1; ctx.font = '10px ' + css('--mono'); ctx.fillStyle = css('--muted');
+    [85, 95].forEach(g => { ctx.beginPath(); ctx.moveTo(0, y(g)); ctx.lineTo(w, y(g)); ctx.stroke(); ctx.fillText(g + '°', 4, y(g) - 3); });
+    const dx = w / (N - 1);
+    ctx.beginPath(); ctx.strokeStyle = css('--accent'); ctx.lineWidth = 1.8;
+    data.forEach((v, k) => { const X = k * dx, Y = y(v); k ? ctx.lineTo(X, Y) : ctx.moveTo(X, Y); });
+    ctx.stroke();
+    ctx.fillStyle = css('--alert');
+    data.forEach((v, k) => { if (flags[k]) { ctx.beginPath(); ctx.arc(k * dx, y(v), 3.5, 0, 7); ctx.fill(); } });
+  }
+  for (let k = 0; k < N; k++) step();
+  draw();
+  setInterval(() => { if (running) { step(); draw(); } }, 250);
+  addEventListener('resize', draw);
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => setTimeout(draw, 50));
+  const tog = document.getElementById('tele-toggle');
+  tog.textContent = running ? 'Pause' : 'Play';
+  tog.addEventListener('click', () => { running = !running; tog.textContent = running ? 'Pause' : 'Play'; });
+
+  /* ---------- asset assistant demo ---------- */
+  const QA = [
+    { q: 'Which assets at Plant B are overdue for verification?',
+      trace: ['search asset_register(plant="B", last_verified < 12 months)', 'retrieve policy §4.2 Physical verification', 'compose answer + offer action'],
+      a: '<b>3 assets</b> at Plant B are past the 12-month verification window: a paint-shop robot arm (AST-B-1182, last verified 14 months ago), a stamping press die set (AST-B-0937, 13 months) and a forklift charger bank (AST-B-2210, 15 months). Policy requires verification within 12 months.<br><br><b>Draft action:</b> create 3 verification tasks for the Plant B asset team. Waiting for your confirmation.',
+      cites: ['asset_register · 3 rows', 'Asset Policy §4.2'] },
+    { q: 'What approval does a ¥2M tooling purchase need?',
+      trace: ['retrieve policy §2.1 Investment approval thresholds', 'retrieve form CAPEX-01', 'compose answer'],
+      a: 'Purchases between ¥1M and ¥5M need <b>two approvals</b>: the department head and the finance controller, plus a completed CAPEX-01 business case with a payback estimate. Above ¥5M the plant director also signs.',
+      cites: ['Investment Policy §2.1', 'Form CAPEX-01'] },
+    { q: 'Summarise Q3 capex against budget',
+      trace: ['query capex_ledger(quarter="Q3")', 'aggregate by plant', 'compose answer'],
+      a: 'Q3 capex was <b>¥48.6M against a ¥52.0M budget</b> (93%). Plant A is 4% over because of an early press-line upgrade; Plants B and C are under budget with two projects deferred to Q4.',
+      cites: ['capex_ledger · 214 rows', 'Budget FY26 v3'] }
+  ];
+  const qs = document.getElementById('qs'), ans = document.getElementById('answer');
+  function show(i) {
+    const d = QA[i];
+    [...qs.children].forEach((b, k) => b.setAttribute('aria-pressed', k === i));
+    ans.innerHTML = `<ol class="trace">${d.trace.map(s => `<li>${s}</li>`).join('')}</ol><div>${d.a}</div><div class="cites">${d.cites.map(c => `<span>${c}</span>`).join('')}</div>`;
+  }
+  QA.forEach((d, i) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'chip-btn'; b.textContent = d.q; b.addEventListener('click', () => show(i)); qs.appendChild(b); });
+  show(0);
+
+  addEventListener('beforeprint', () => document.querySelectorAll('details').forEach(d => d.open = true));
+
+  /* ---------- active section in side nav ---------- */
+  const links = [...document.querySelectorAll('.side-nav a')];
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id));
+  }), { rootMargin: '-40% 0px -55% 0px' });
+  document.querySelectorAll('main section[id]').forEach(sec => io.observe(sec));
+
+  /* ---------- cinematic intro: Waikato sunset highway ---------- */
+  const sc = document.getElementById('scene'), sx = sc.getContext('2d');
+  const mask = document.getElementById('mask'), cap = document.getElementById('cap'), hint = document.getElementById('hint');
+  const intro = document.querySelector('.intro');
+  let SW = 0, SH = 0, tt = 0;
+  const cars = Array.from({ length: 26 }, (_, i) => ({ z: Math.random(), lane: i % 4, dir: i % 2 ? 1 : -1, v: .0025 + Math.random() * .003 }));
+  function sizeScene() { const d = devicePixelRatio || 1; SW = sc.clientWidth; SH = sc.clientHeight; sc.width = SW * d; sc.height = SH * d; sx.setTransform(d, 0, 0, d, 0, 0); }
+  function hills(base, amp, freq, phase, color) {
+    sx.fillStyle = color; sx.beginPath(); sx.moveTo(0, SH);
+    for (let x = 0; x <= SW; x += 8) sx.lineTo(x, base - amp * (Math.sin(x * freq + phase) * .6 + Math.sin(x * freq * 2.3 + phase * 1.7) * .4));
+    sx.lineTo(SW, SH); sx.closePath(); sx.fill();
+  }
+  function drawScene() {
+    const hz = SH * .62, g = sx.createLinearGradient(0, 0, 0, hz);
+    g.addColorStop(0, '#1B0B2E'); g.addColorStop(.45, '#7A1E5C'); g.addColorStop(.75, '#FF5E6C'); g.addColorStop(1, '#FFB45E');
+    sx.fillStyle = g; sx.fillRect(0, 0, SW, hz);
+    // sun with scan-line cuts
+    const r = Math.min(SW, SH) * .2, cx = SW / 2, cy = hz - r * .35;
+    const sg = sx.createLinearGradient(0, cy - r, 0, cy + r); sg.addColorStop(0, '#FFE9A8'); sg.addColorStop(1, '#FF6F7D');
+    sx.save(); sx.beginPath(); sx.arc(cx, cy, r, 0, 7); sx.clip(); sx.fillStyle = sg; sx.fillRect(cx - r, cy - r, r * 2, r * 2);
+    sx.fillStyle = '#FF5E6C'; for (let k = 0; k < 7; k++) { const yy = cy + r * .05 + k * r * .14; sx.fillRect(cx - r, yy, r * 2, 2 + k * 1.3); }
+    sx.restore();
+    hills(hz + 4, SH * .05, .004, 1.2, '#4A1546');
+    hills(hz + 14, SH * .035, .007, 4.1, '#2C0E33');
+    // ground + road
+    const gg = sx.createLinearGradient(0, hz, 0, SH); gg.addColorStop(0, '#1E0B26'); gg.addColorStop(1, '#0F0A16');
+    sx.fillStyle = gg; sx.fillRect(0, hz + 10, SW, SH);
+    const vx = SW / 2, vy = hz + 10;
+    sx.strokeStyle = 'rgba(255,94,142,.35)'; sx.lineWidth = 1;
+    for (let k = -8; k <= 8; k++) { sx.beginPath(); sx.moveTo(vx, vy); sx.lineTo(vx + k * SW * .14, SH); sx.stroke(); }
+    for (let k = 0; k < 12; k++) { const p = ((k / 12) + (tt * .004) % (1 / 12)) ; const yy = vy + (SH - vy) * p * p; sx.globalAlpha = p; sx.beginPath(); sx.moveTo(0, yy); sx.lineTo(SW, yy); sx.stroke(); }
+    sx.globalAlpha = 1;
+    // car light trails (white heading in, red heading out)
+    for (const c of cars) {
+      c.z += c.v; if (c.z > 1) c.z = 0;
+      const p = c.z * c.z, yy = vy + (SH - vy) * p, off = (c.lane - 1.5) * .06 * c.dir;
+      const x = vx + (off + (c.dir > 0 ? .03 : -.03)) * SW * p * 2.2, len = 4 + 60 * p;
+      sx.strokeStyle = c.dir > 0 ? 'rgba(255,240,210,.9)' : 'rgba(255,70,90,.9)'; sx.lineWidth = .5 + 3 * p;
+      sx.beginPath(); sx.moveTo(x, yy); sx.lineTo(x - (x - vx) * len / Math.max(1, yy - vy) , yy - len); sx.stroke();
+    }
+    tt++;
+  }
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  function onScroll() {
+    const total = intro.offsetHeight - innerHeight, p = reduce ? 1 : clamp(-intro.getBoundingClientRect().top / Math.max(1, total), 0, 1);
+    const m = clamp(p / .55, 0, 1), e = m * m * m;
+    mask.style.transform = `scale(${1 + e * 30})`;
+    mask.style.opacity = String(1 - clamp((m - .55) / .45, 0, 1));
+    const c = clamp((p - .5) / .3, 0, 1);
+    cap.style.opacity = String(c); cap.style.transform = `translateY(${(1 - c) * 20}px)`;
+    hint.style.opacity = String(1 - clamp(p / .1, 0, 1));
+  }
+  sizeScene(); drawScene(); onScroll();
+  addEventListener('resize', () => { sizeScene(); drawScene(); onScroll(); });
+  addEventListener('scroll', onScroll, { passive: true });
+  if (!reduce) (function sl() { const r = intro.getBoundingClientRect(); if (r.bottom > 0) drawScene(); requestAnimationFrame(sl); })();
+
+  /* ---------- hero: vehicle network canvas ---------- */
+  const net = document.getElementById('net'), nx = net.getContext('2d');
+  let nodes = [], W = 0, H = 0;
+  function sizeNet() {
+    const dpr = devicePixelRatio || 1; W = net.clientWidth; H = net.clientHeight;
+    net.width = W * dpr; net.height = H * dpr; nx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const n = Math.round(Math.min(90, W * H / 14000));
+    nodes = Array.from({ length: n }, () => ({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35, hot: Math.random() < .06 }));
+  }
+  function drawNet() {
+    nx.clearRect(0, 0, W, H);
+    const acc = css('--accent'), sig = css('--signal');
+    for (const p of nodes) { p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > W) p.vx *= -1; if (p.y < 0 || p.y > H) p.vy *= -1; }
+    nx.lineWidth = 1;
+    for (let i = 0; i < nodes.length; i++) for (let j = i + 1; j < nodes.length; j++) {
+      const a = nodes[i], b = nodes[j], d = Math.hypot(a.x - b.x, a.y - b.y);
+      if (d < 140) { nx.globalAlpha = (1 - d / 140) * .55; nx.strokeStyle = acc; nx.beginPath(); nx.moveTo(a.x, a.y); nx.lineTo(b.x, b.y); nx.stroke(); }
+    }
+    for (const p of nodes) { nx.globalAlpha = p.hot ? .95 : .7; nx.fillStyle = p.hot ? sig : acc; nx.beginPath(); nx.arc(p.x, p.y, p.hot ? 3 : 1.8, 0, 7); nx.fill(); }
+    nx.globalAlpha = 1;
+  }
+  sizeNet(); drawNet(); addEventListener('resize', () => { sizeNet(); drawNet(); });
+  if (!reduce) (function loop() { drawNet(); requestAnimationFrame(loop); })();
+
+  /* ---------- rotating headline ---------- */
+  const words = ['streaming data systems', 'RAG assistants', 'AI agents', 'backend platforms'];
+  const rot = document.getElementById('rot');
+  if (!reduce) {
+    let wi = 0, ci = words[0].length, del = true;
+    setInterval(() => {
+      const w = words[wi];
+      if (del) { ci--; if (ci === 0) { del = false; wi = (wi + 1) % words.length; } }
+      else { ci++; if (ci === words[wi].length) { del = true; ci += 18; } }
+      rot.textContent = words[wi].slice(0, Math.min(ci, words[wi].length));
+    }, 70);
+  }
+
+  /* ---------- reveal below-the-fold blocks ---------- */
+  if (!reduce && 'IntersectionObserver' in window) {
+    const els = [...document.querySelectorAll('.proj, .role, .skill, .edu .item, .facts > div')].filter(e => e.getBoundingClientRect().top > innerHeight);
+    els.forEach(e => e.classList.add('reveal', 'pre'));
+    const ro = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.remove('pre'); ro.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+    els.forEach(e => ro.observe(e));
+  }
+
+  /* ---------- contact form ---------- */
+  // On GitHub Pages, set FORM_ENDPOINT to a Formspree (or similar) URL to deliver messages by email.
+  const FORM_ENDPOINT = '';
+  const form = document.getElementById('msg-form'), note = document.getElementById('f-note');
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!form.checkValidity()) { note.textContent = 'Please fill in your name, a valid email and a message.'; return; }
+    if (!FORM_ENDPOINT) { note.textContent = 'The form is not connected yet. Please reach out on LinkedIn for now.'; return; }
+    note.textContent = 'Sending…';
+    try {
+      const r = await fetch(FORM_ENDPOINT, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) });
+      if (!r.ok) throw 0;
+      form.reset(); note.textContent = 'Thanks. Your message was sent and Jordan will reply by email.';
+    } catch { note.textContent = 'That did not send. Please try again, or message Jordan on LinkedIn.'; }
+  });
+})();
+</script>
+</body>
+</html>
