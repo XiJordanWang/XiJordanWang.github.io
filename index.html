@@ -320,6 +320,10 @@ form.msg textarea { min-height: 80px }
   .lede, .cols ul li, .cols p { font-size: .88rem; line-height: 1.4 }
   .screen .win { padding: 10px 14px } .win h2, .label { margin-bottom: 4px } .cols { margin-top: 8px !important; gap: 10px }
 }
+
+.helpbar .copy { margin-left: auto; font: 400 .78rem var(--term); color: var(--muted); white-space: nowrap; padding-left: 12px }
+@media (max-width: 1150px) { .helpbar .copy { font-size: .7rem } }
+@media (max-width: 860px) { .helpbar .copy { display: none } }
 </style>
 
 </head>
@@ -510,7 +514,7 @@ form.msg textarea { min-height: 80px }
       <a class="btn" href="https://www.linkedin.com/in/xi-jordan-wang">LinkedIn</a>
     </div>
   </aside>
-  <div class="helpbar"><span class="t">Help</span><span class="help" id="help" aria-live="polite"></span></div>
+  <div class="helpbar"><span class="t">Help</span><span class="help" id="help" aria-live="polite"></span><span class="copy">© 2026 Xi (Jordan) Wang · Built by hand, hosted on GitHub Pages</span></div>
 </div>
 <footer>© 2026 Xi (Jordan) Wang · Built by hand, hosted on GitHub Pages</footer>
 
