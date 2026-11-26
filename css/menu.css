@@ -1,0 +1,36 @@
+/* Main menu skin, matching the title screen: pixel-art backdrop, glassy windows and blue highlight bars. */
+.backdrop { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none }
+.backdrop img { width: 100%; height: 100%; object-fit: cover; object-position: 58% 22%; image-rendering: pixelated; filter: saturate(.9) brightness(.6) }
+.backdrop::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(7,11,30,.5) 0%, rgba(7,11,30,.78) 45%, rgba(7,11,30,.9) 100%) }
+#stars { opacity: .35 }
+
+/* windows let the backdrop show through */
+.win { background: linear-gradient(180deg, rgba(58,65,160,.8), rgba(25,29,94,.88)); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px) }
+.topbar, .helpbar { background: linear-gradient(90deg, rgba(6,7,42,.92), rgba(16,19,74,.75)) }
+
+/* command menu: highlight bars instead of the arrow cursor */
+.cmd ul { gap: 6px }
+.cmd button { padding: 6px 14px 6px 26px; border-radius: 0; text-transform: uppercase; letter-spacing: .08em; font-size: 1.12rem; color: #C7D0EA;
+  background: linear-gradient(90deg, rgba(20,30,70,0), rgba(20,30,70,.55)); border-right: 3px solid rgba(160,190,255,.25); transition: background .15s, color .15s }
+.cmd button:hover { background: linear-gradient(90deg, rgba(60,100,220,0), rgba(60,100,220,.45)) }
+.cmd button.cursor { color: #fff; background: linear-gradient(90deg, rgba(60,100,220,0), rgba(60,100,220,.9)); border-right-color: #BFD6FF;
+  box-shadow: 6px 0 14px -6px rgba(150,190,255,.9) }
+.cmd button.cursor::after { content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.6)) }
+/* the open screen gets a small gold diamond */
+.cmd button::before { content: none }
+.cmd button[aria-current="true"]::before, .cmd button[aria-current="true"]:focus-visible::before { content: ""; position: absolute; left: 8px; top: 50%; width: 7px; height: 7px;
+  transform: translateY(-50%) rotate(45deg); background: var(--gold); clip-path: none; filter: drop-shadow(0 0 4px rgba(255,217,102,.8)); animation: none }
+.cmd button:not([aria-current="true"]):focus-visible::before { content: none }
+.cmd button:focus-visible { outline: none }
+@media (max-width: 860px) { .cmd button { font-size: .95rem; padding-left: 22px } }
+
+/* keyboard hints in the help bar */
+.helpbar .keys { margin-left: auto; font: 400 .95rem var(--term); color: var(--muted); white-space: nowrap }
+.helpbar .keys kbd { font: inherit; color: #fff; padding: 0 4px; border: 1px solid rgba(190,205,255,.35); border-radius: 3px; background: rgba(255,255,255,.06) }
+.helpbar .keys + .copy { margin-left: 18px }
+@media (max-width: 1200px) { .helpbar .keys { display: none } }
+@media (hover: none) { .helpbar .keys { display: none } }
+
+/* lists you can move through with the arrow keys */
+[data-keynav] button:focus-visible { outline: 2px solid #BFD6FF; outline-offset: -2px }

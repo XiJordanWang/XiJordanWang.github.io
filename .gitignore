@@ -1,0 +1,9 @@
+# private CV with phone and email: never publish
+Xi-Jordan-Wang-CV.pdf
+*-private.*
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

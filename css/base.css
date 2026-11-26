@@ -1,0 +1,30 @@
+/* Design tokens, page base and the window frame. */
+/* Layout: a retro RPG pause menu. Party card + content window on the left, command menu and info windows on the right. */
+:root {
+  --void: #05060F; --win-top: #2B4BC9; --win-bot: #0A1650; --frame: #E6ECFF; --frame-dim: #8C9AD6;
+  --ink: #FFFFFF; --muted: #B9C4F2; --gold: #FFD966; --hp: #46E08A; --mp: #4FC3FF; --alert: #FF6B73;
+  --orb-ai: #5CF29B; --orb-be: #FFD966; --orb-da: #FF8A5C; --orb-fe: #6FD3FF; --orb-cl: #C59BFF; --orb-wa: #FF7EB6;
+  --gb-light: #E5EEB7; --gb-dark: #1E3A1A;
+  --pixel: "Silkscreen", "Courier New", monospace;
+  --body: "Rubik", "Segoe UI", system-ui, sans-serif;
+  --term: "VT323", ui-monospace, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box }
+html { overflow-x: clip }
+body { background: var(--void); color: var(--ink); font: 400 16px/1.55 var(--body); min-height: 100vh }
+#stars { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none }
+.game { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; padding-block: 28px 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 18px; align-items: start }
+@media (max-width: 860px) { .game { grid-template-columns: 1fr } .side { order: -1 } }
+a { color: var(--gold) }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px }
+
+/* the menu window */
+.win { position: relative; background: linear-gradient(180deg, var(--win-top), var(--win-bot)); border: 2px solid var(--frame);
+  border-radius: 9px; box-shadow: inset 0 0 0 2px #0A1238, inset 0 0 0 4px var(--frame-dim), 0 10px 30px rgba(0,0,0,.6); padding: 18px 20px; min-width: 0 }
+.win + .win { margin-top: 14px }
+.win h2, .label { font: 400 .95rem var(--pixel); letter-spacing: .04em; color: var(--gold); margin: 0 0 12px; text-shadow: 2px 2px 0 #000 }
+.win p, .win li { text-shadow: 1px 1px 0 rgba(0,0,0,.6) }
+.muted { color: var(--muted) }

@@ -1,0 +1,149 @@
+/* Handheld RPG main-menu theme: bars, status panel, content windows and fit rules. */
+/* ===== handheld RPG main-menu layout ===== */
+:root {
+  --void: #0B0C24; --panel-a: #3A41A0; --panel-b: #191D5E; --panel-line: #C7CCF5; --box: #0F1240; --box-line: #6E76C8;
+  --ink: #FFFFFF; --muted: #AEB4E6; --gold: #FFFFFF; --tagbg: #0D0F33; --hp: #7FE0FF; --mp: #8FB4FF; --alert: #FF6B73;
+  --pixel: "Saira Condensed", "Arial Narrow", sans-serif; --body: "Saira", "Segoe UI", system-ui, sans-serif; --term: "Share Tech Mono", ui-monospace, monospace;
+}
+body { background: radial-gradient(1200px 700px at 70% 20%, #2B2F86 0%, #14164A 45%, var(--void) 100%) }
+#stars { opacity: .5 }
+.game { grid-template-columns: 220px minmax(0, 1fr) !important; grid-template-areas: "top top" "side main" "help help"; gap: 12px 16px; padding-block: 14px 18px }
+.topbar { grid-area: top } main { grid-area: main; min-width: 0 } .side { grid-area: side } .helpbar { grid-area: help }
+@media (max-width: 860px) { .game { grid-template-columns: 1fr !important; grid-template-areas: "top" "side" "main" "help" } }
+.topbar, .helpbar { display: flex; align-items: center; gap: 16px; background: linear-gradient(180deg, #06072A, #10134A); border-top: 1px solid var(--box-line); border-bottom: 1px solid var(--box-line); min-height: 38px; padding: 0 16px 0 0; min-width: 0 }
+.topbar .t, .helpbar .t { align-self: stretch; display: flex; align-items: center; padding: 0 34px 0 16px; background: linear-gradient(180deg, #2C3290, #151859); clip-path: polygon(0 0, 100% 0, calc(100% - 22px) 100%, 0 100%);
+  font: 600 1.25rem var(--pixel); letter-spacing: .14em; color: #E9ECFF }
+.helpbar .t { font-size: .95rem }
+.topbar .sub { margin-left: auto; font: 500 .92rem var(--pixel); letter-spacing: .08em; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0 }
+.helpbar .help { font: 400 1rem var(--body); color: var(--ink); min-height: 0 }
+.win { background: linear-gradient(180deg, var(--panel-a), var(--panel-b)); border: 2px solid var(--panel-line); border-radius: 12px; box-shadow: inset 0 0 0 1px #0B0D3A, 0 8px 24px rgba(0,0,0,.5); padding: 14px 18px }
+.win h2, .label { font: 600 1rem var(--pixel); letter-spacing: .14em; color: var(--ink); text-shadow: none; text-transform: uppercase }
+.win p, .win li, .party h1, .cmd button, .quest h3, .detail h3, .slot header, .edu h3, .log ol button b { text-shadow: 0 1px 0 rgba(0,0,0,.5) }
+/* command menu */
+.cmd { padding: 18px 14px; border-radius: 12px }
+.cmd ul { gap: 4px }
+.cmd button { font: 500 1.3rem var(--pixel); letter-spacing: .02em; padding: 4px 6px 4px 40px; color: var(--ink) }
+.cmd button:not([aria-current="true"]) { color: #D9DCF7 }
+.cmd button:hover { background: rgba(255,255,255,.06) }
+.cmd button[aria-current="true"]::before, .cmd button:focus-visible::before { left: 4px; width: 28px; height: 16px;
+  background: linear-gradient(90deg, #fff 0 60%, transparent 60%) no-repeat left center/100% 4px, none;
+  clip-path: polygon(0 35%, 62% 35%, 62% 0, 100% 50%, 62% 100%, 62% 65%, 0 65%); background: #fff; filter: drop-shadow(0 0 4px rgba(160,190,255,.9)) }
+@media (max-width: 860px) { .cmd button { font-size: 1.05rem } }
+.btns { gap: 8px } .btn { border: 1px solid var(--box-line); border-radius: 6px; background: var(--box); font: 600 .9rem var(--pixel); letter-spacing: .12em; text-shadow: none }
+.btn:hover { border-color: #fff; color: #fff; background: #1C2170 }
+/* status panel */
+.party { display: grid; grid-template-columns: 104px minmax(0, 1fr) 150px; grid-template-areas: "pic mid right" "info info info"; gap: 12px 16px; align-items: start; border-radius: 12px; background: linear-gradient(180deg, #B9BEEA, #8E95D6); border-color: #E6E8FF; color: #fff; padding: 14px }
+.party .portrait { grid-area: pic; width: 104px; border: 2px solid #0B0D3A; border-radius: 4px; box-shadow: none; background: linear-gradient(180deg, #DDE5F8, #AEBDE6) }
+.party .portrait img { border-radius: 0; transform: none }
+.p-mid { grid-area: mid; display: grid; gap: 5px; min-width: 0 }
+.namebar { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; background: linear-gradient(90deg, #0B0D3A, #1B1F63); padding: 2px 14px; border-radius: 3px }
+.namebar h1 { font: 600 1.35rem/1.3 var(--pixel); letter-spacing: .06em; margin: 0; text-shadow: none }
+.namebar .lvl { font: 600 1.15rem var(--pixel); letter-spacing: .08em; white-space: nowrap }
+.stat { display: grid; grid-template-columns: 78px minmax(0, 1fr); align-items: center }
+.tg { display: inline-flex; align-items: center; height: 22px; padding: 0 16px 0 8px; background: var(--tagbg); color: #fff; font: 600 .82rem var(--pixel); letter-spacing: .12em; text-transform: uppercase;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%); border-radius: 3px 0 0 3px; white-space: nowrap }
+.stat .tg { background: linear-gradient(90deg, #12156A, #2E3AB2) }
+.box { display: flex; align-items: center; justify-content: flex-end; gap: 10px; min-height: 24px; background: linear-gradient(180deg, #FFFFFF, #DCDFF6); color: #141850; border: 1px solid #0B0D3A; border-radius: 3px;
+  margin-left: -10px; padding: 0 12px 0 18px; font: 400 1.05rem var(--term); min-width: 0; white-space: nowrap; overflow: hidden }
+.box .bar { flex: 1; height: 6px; border: 1px solid #6E76C8; background: #0B0D3A; border-radius: 0; transform: none }
+.box .bar i { box-shadow: none }
+.p-right { grid-area: right; margin: 0; display: grid; grid-template-columns: 1fr auto; gap: 3px 10px; padding: 8px 12px; background: linear-gradient(180deg, #E9EBFB, #C9CDF0); border: 1px solid #0B0D3A; border-radius: 3px; color: #2A35A0;
+  border-left: 2px dashed #0B0D3A }
+.p-right dt { font: 600 .9rem var(--pixel); letter-spacing: .08em } .p-right dd { margin: 0; font: 400 1.05rem var(--term); color: #141850; text-align: right }
+.p-info { grid-area: info; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px }
+.ib { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: linear-gradient(180deg, #1D2270, #101348); border: 1px solid #0B0D3A; border-radius: 4px; padding-right: 14px; min-height: 30px; min-width: 0; overflow: hidden }
+.ib .tg { height: 30px; background: linear-gradient(90deg, #0B0D3A, #232985); font-size: .95rem }
+.ib span:last-child { font: 400 1.05rem var(--term); white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+@media (max-width: 760px) { .party { grid-template-columns: 84px minmax(0, 1fr); grid-template-areas: "pic mid" "right right" "info info" } .party .portrait { width: 84px } .p-right { grid-template-columns: repeat(5, auto 1fr); border-left: 1px solid #0B0D3A } .p-info { grid-template-columns: 1fr 1fr } .ib.wide { grid-column: 1 / -1 } }
+@media (max-width: 460px) { .p-right { grid-template-columns: repeat(3, auto 1fr) } }
+/* content */
+.screen .win:first-child { margin-top: 12px }
+.tag { font: 600 .72rem var(--pixel); letter-spacing: .12em; background: var(--tagbg); color: #fff; border: 1px solid var(--box-line); border-radius: 3px }
+.quest h3, .detail h3, .edu h3 { font: 600 1.15rem var(--pixel); letter-spacing: .04em }
+.chips span { font: 400 .85rem/1 var(--term); border-radius: 3px; border-color: var(--box-line); background: var(--box); padding: 5px 8px }
+.demo, .slot { background: rgba(11,13,58,.6); border-color: var(--box-line); border-radius: 6px }
+.readout { font: 400 .95rem var(--term) } .readout b { color: var(--hp) } .events { font: 400 .85rem/1.4 var(--term) } .trace { font: 400 .82rem/1.5 var(--term); color: var(--hp) } .cites { font: 400 .8rem var(--term) }
+.qs button { font: 500 .85rem/1.2 var(--body); border-radius: 3px; border-color: var(--box-line); padding: 5px 9px; background: var(--box) }
+.qs button[aria-pressed="true"] { border-color: #fff; color: #fff; background: #2A31A0 }
+.log ol button span { font: 400 .8rem var(--term) } .log ol button b { font: 600 1.05rem var(--pixel); letter-spacing: .03em }
+.log ol button[aria-current="true"] { background: rgba(255,255,255,.12) } .log ol button[aria-current="true"]::before { color: #fff }
+.detail .where, .edu .when { font: 400 .85rem var(--term); color: var(--hp) }
+.slot header { font: 600 1.05rem var(--pixel); letter-spacing: .05em }
+form.msg label { font: 600 .9rem var(--pixel); letter-spacing: .1em; color: var(--muted) } form.msg input, form.msg textarea { background: var(--box); border-color: var(--box-line) }
+.lede { font-size: .98rem } .cols ul li, .cols p { font-size: .95rem }
+footer { font: 400 .8rem var(--term) }
+.helpbar { position: sticky; bottom: env(safe-area-inset-bottom, 0px); z-index: 4 }
+.screen .win { padding: 12px 16px }
+.topbar .t, .helpbar .t { white-space: nowrap }
+@media (max-width: 560px) { .topbar .sub { display: none } .box { font-size: .9rem; padding-left: 14px; padding-right: 8px } .stat { grid-template-columns: 70px minmax(0, 1fr) } .helpbar .help { font-size: .9rem } }
+
+/* ---- every section fits one screen ---- */
+body { margin: 0 }
+body:not([data-screen="profile"]) .party { display: none }
+body:not([data-screen="profile"]) .screen .win:first-child { margin-top: 0 }
+@media (min-width: 861px) and (min-height: 560px) {
+  html, body { height: 100% }
+  .game { height: 100vh; height: 100dvh; grid-template-rows: auto minmax(0, 1fr) auto; padding-block: 12px }
+  .game { align-items: stretch }
+  main, .side { align-self: stretch; min-height: 0; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #6E76C8 transparent }
+  footer { display: none }
+  .helpbar { position: static }
+}
+/* compact quests */
+.quests p { font-size: .88rem; line-height: 1.45 }
+.quests .chips { margin: 6px 0 }
+.demo { padding: 10px; gap: 6px }
+.demo canvas { height: 90px !important }
+.events { min-height: 1.3em }
+.ans { font-size: .86rem; line-height: 1.45; margin: 4px 0 }
+.quest h3, .quests h3 { font-size: 1.05rem; margin-bottom: 2px }
+.quests .tag { margin-bottom: 4px }
+.links { margin-top: 6px }
+.qs button { font-size: .78rem; padding: 4px 8px }
+.log { gap: 10px } .log ol button { padding-block: 5px } .detail ul { gap: 4px } .detail li { font-size: .92rem; line-height: 1.45 }
+.edu { gap: 10px } .edu p { font-size: .88rem }
+form.msg textarea { min-height: 80px }
+
+.qwrap { display: grid; grid-template-columns: minmax(0, 230px) minmax(0, 1fr); gap: 14px }
+@media (max-width: 680px) { .qwrap { grid-template-columns: 1fr } }
+.qwrap .quests { grid-template-columns: 1fr !important }
+.qlist { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; align-content: start }
+.qlist button { all: unset; box-sizing: border-box; cursor: pointer; display: grid; width: 100%; padding: 6px 10px; border-radius: 4px }
+.qlist button:hover { background: rgba(255,255,255,.06) }
+.qlist button[aria-current="true"] { background: rgba(255,255,255,.12) }
+.qlist b { font: 600 1.05rem var(--pixel); letter-spacing: .03em } .qlist span { font: 400 .8rem var(--term); color: var(--muted) }
+.quests > article[hidden] { display: none }
+.demo canvas { height: 110px !important }
+
+.p-info { display: flex; flex-wrap: wrap; gap: 8px }
+.p-info .ib { flex: 1 1 auto }
+.ib span:last-child { overflow: visible; text-overflow: clip }
+
+.p-right dd { font-size: .85rem; color: #4B56B8 }
+.p-right { gap: 2px 10px; padding: 6px 12px }
+
+.p-right { grid-template-columns: 1fr; align-content: center }
+.p-right dt { font: 600 .95rem var(--pixel); letter-spacing: .06em; padding-left: 14px; position: relative }
+.p-right dt::before { content: ""; position: absolute; left: 0; top: 50%; width: 7px; height: 7px; transform: translateY(-50%) rotate(45deg); background: #2E3AB2 }
+.box { white-space: normal; text-align: right; line-height: 1.15; padding-block: 2px }
+.party { grid-template-columns: 104px minmax(0, 1fr) 270px }
+.p-right { grid-template-columns: 1fr 1fr; gap: 1px 10px }
+.p-right dt { font-size: .88rem; white-space: nowrap }
+@media (max-width: 760px) { .party { grid-template-columns: 84px minmax(0, 1fr) } .p-right { grid-template-columns: repeat(3, 1fr) !important } }
+@media (max-width: 460px) { .p-right { grid-template-columns: repeat(2, 1fr) !important } }
+
+@media (min-width: 861px) and (max-width: 1150px) {
+  .game { grid-template-columns: 170px minmax(0, 1fr) !important }
+  .cmd button { font-size: 1.1rem; padding-left: 34px }
+  .party { grid-template-columns: 80px minmax(0, 1fr) 220px; gap: 10px 12px; padding: 12px }
+  .party .portrait { width: 80px }
+  .p-right dt { font-size: .8rem } .p-right { gap: 0 8px; padding: 6px 10px }
+  .box { font-size: .92rem } .stat { grid-template-columns: 64px minmax(0, 1fr) } .tg { font-size: .74rem }
+  .ib span:last-child { font-size: .92rem }
+  .lede, .cols ul li, .cols p { font-size: .88rem; line-height: 1.4 }
+  .screen .win { padding: 10px 14px } .win h2, .label { margin-bottom: 4px } .cols { margin-top: 8px !important; gap: 10px }
+}
+
+.helpbar .copy { margin-left: auto; font: 400 .78rem var(--term); color: var(--muted); white-space: nowrap; padding-left: 12px }
+@media (max-width: 1150px) { .helpbar .copy { font-size: .7rem } }
+@media (max-width: 860px) { .helpbar .copy { display: none } }

@@ -1,0 +1,55 @@
+/* Status screen motion: window open, typing, gems, damage numbers, limit gauge, overlay. */
+/* ---- Status screen animations (original retro-RPG touches) ---- */
+@keyframes winOpen { 0% { transform: scale(.7, .04); opacity: .3 } 55% { transform: scale(1, .04); opacity: 1 } 85% { transform: scale(1, 1.02) } 100% { transform: none } }
+.pop { animation: winOpen .42s cubic-bezier(.2, .8, .3, 1) both; transform-origin: 50% 50% }
+@keyframes typeIn { from { clip-path: inset(0 100% 0 0) } to { clip-path: inset(0 0 0 0) } }
+.party.pop .stat .box > span:only-child { animation: typeIn .55s steps(18, end) both }
+.party.pop .stat:nth-child(3) .box > span { animation-delay: .45s } .party.pop .stat:nth-child(4) .box > span { animation-delay: .65s } .party.pop .stat:nth-child(5) .box > span { animation-delay: .85s }
+.namebar { position: relative; overflow: hidden }
+.namebar::after { content: ""; position: absolute; top: 0; bottom: 0; left: -40%; width: 30%; background: linear-gradient(100deg, transparent, rgba(255,255,255,.28), transparent); transform: skewX(-20deg); animation: shine 7s 1.2s infinite; pointer-events: none }
+@keyframes shine { 0% { left: -40% } 14%, 100% { left: 130% } }
+@keyframes gem { 0%, 9%, 100% { transform: translateY(-50%) rotate(45deg); background: #2E3AB2; box-shadow: none } 4% { transform: translateY(-50%) rotate(225deg) scale(1.5); background: #fff; box-shadow: 0 0 8px 2px #8FB0FF } }
+.p-right dt::before { animation: gem 8s infinite; animation-delay: calc(1.4s + var(--k, 0) * .22s) }
+.dmg { display: inline-block; color: var(--gold); font-weight: 600 }
+@keyframes dmg { 0% { transform: translateY(6px); opacity: 0 } 35% { transform: translateY(-9px); opacity: 1 } 60% { transform: none } 78% { transform: translateY(-3px) } 100% { transform: none } }
+.screen.go .dmg { animation: dmg .7s .5s ease-out both } .screen.go .dmg.d2 { animation-delay: .68s }
+/* portrait + limit gauge */
+.pic { all: unset; box-sizing: border-box; grid-area: pic; display: grid; gap: 5px; width: 104px; cursor: pointer; position: relative }
+.pic .portrait { grid-area: auto; width: 100% }
+.pic:hover .portrait, .pic:focus-visible .portrait { border-color: var(--gold) }
+.pic:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px }
+.limit { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 5px; font: 600 .66rem var(--pixel); letter-spacing: .1em; color: #0B0D3A }
+.limit .lg { height: 8px; background: #0B0D3A; border: 1px solid #0B0D3A; border-radius: 2px; overflow: hidden }
+.limit .lg i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #C23BFF, #FF6BD0) }
+.pic.ready .limit .lg i { background: linear-gradient(90deg, #FFD966, #fff, #FF6BD0, #FFD966); background-size: 200% 100%; animation: charged .9s linear infinite }
+.pic.ready .limit .lt { animation: blink .9s steps(2) infinite }
+.pic.ready .portrait { box-shadow: 0 0 0 2px #FFD966, 0 0 14px #FF6BD0 }
+@keyframes charged { to { background-position: -200% 0 } }
+@keyframes blink { 50% { color: #fff } }
+@media (max-width: 760px) { .pic { width: 84px } }
+/* "now coding" mini window beside the status text */
+.lede-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: start }
+.nowcoding { margin: 2px 0 0; width: 210px; border: 2px solid var(--frame); border-radius: 6px; overflow: hidden; background: #08100C; box-shadow: 0 0 0 2px #000 }
+.nowcoding img { display: block; width: 100%; height: auto; image-rendering: pixelated }
+.nowcoding figcaption { font: 400 .62rem var(--pixel); letter-spacing: .08em; color: var(--muted); padding: 3px 8px; background: #0B0D3A; display: flex; justify-content: space-between }
+.nowcoding figcaption b { color: var(--hp); font-weight: 400 }
+.nowcoding { width: 190px }
+@media (max-width: 1150px), (min-width: 861px) and (max-height: 700px) { .nowcoding { display: none } .lede-row { display: block } }
+@media (max-width: 860px) { .nowcoding { display: block; width: 100%; max-width: 360px } .lede-row { display: grid; grid-template-columns: 1fr } }
+/* limit break overlay */
+.lb { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 16px; background: rgba(5,6,15,.72); cursor: pointer }
+.lb[hidden] { display: none }
+.lb-win { width: min(660px, 100%); padding: 10px 10px 8px; background: linear-gradient(180deg, var(--win-top), var(--win-bot)); border: 2px solid var(--frame); border-radius: 10px; box-shadow: 0 0 0 2px #000, 0 0 40px rgba(205,30,247,.45) }
+.lb-win img { display: block; width: 100%; height: auto; image-rendering: pixelated; border: 2px solid #0B0D3A; border-radius: 4px; background: #08100C }
+.lb-title { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font: 600 1rem var(--pixel); letter-spacing: .1em; margin: 0 4px 8px; color: #fff }
+.lb-title b { color: var(--gold); font-weight: 600 }
+.lb-hint { font: 400 .95rem var(--term); color: var(--muted); text-align: right; margin: 6px 4px 0 }
+.lb .lb-win { animation: winOpen .42s cubic-bezier(.2, .8, .3, 1) both }
+.flash { position: fixed; inset: 0; z-index: 60; background: #fff; pointer-events: none; animation: flash .45s ease-out forwards }
+@keyframes flash { 0% { opacity: 0 } 20% { opacity: .9 } 100% { opacity: 0 } }
+@media (prefers-reduced-motion: reduce) {
+  .pop, .party.pop .stat .box > span, .namebar::after, .p-right dt::before, .screen.go .dmg, .lb .lb-win, .pic.ready .limit .lg i, .pic.ready .limit .lt { animation: none !important }
+  .namebar::after { display: none }
+}
+
+.pic { width: 100% !important; min-width: 0 }

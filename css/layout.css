@@ -1,0 +1,30 @@
+/* Compact sizing so each screen fits a laptop window. */
+/* ---- compact fit: one screen on a laptop ---- */
+body { font-size: 15px; line-height: 1.5 }
+.game { padding-block: 18px 24px; gap: 14px }
+@media (min-width: 861px) { .game { grid-template-columns: minmax(0, 1fr) 240px } }
+.win { padding: 14px 18px }
+.win + .win { margin-top: 12px }
+.screen .win:first-child { margin-top: 12px }
+.win h2, .label { font-size: .85rem; margin-bottom: 8px }
+.party { grid-template-columns: 88px minmax(0, 1fr) minmax(0, 230px); gap: 16px }
+.portrait { width: 88px }
+.party h1 { font-size: clamp(1.4rem, 2.6vw, 1.8rem); margin-bottom: 2px }
+.lv { margin-top: 4px; font-size: 1.2rem }
+.gauges { gap: 6px }
+.g { grid-template-columns: 48px 1fr; font-size: 1.05rem }
+.g .v { font-size: .9rem; line-height: 1.05; margin-top: -2px }
+.lede { font-size: 1rem }
+.cols ul { gap: 4px !important }
+.cmd button { padding-block: 4px; font-size: 1rem }
+.btns { gap: 6px } .btn { padding: 6px 10px }
+.info { font-size: 1.15rem; gap: 4px }
+.help { font-size: 1.1rem }
+
+.party { grid-template-columns: 88px minmax(0, 1fr) minmax(0, 330px) }
+.g { grid-template-columns: 62px minmax(0, 1fr) 118px; gap: 10px }
+.g .v { grid-column: auto; margin-top: 0; white-space: nowrap; font-size: 1rem }
+@media (max-width: 680px) { .party { grid-template-columns: 84px minmax(0, 1fr) } .g { grid-template-columns: 56px minmax(0, 1fr) 104px } }
+@media (min-width: 1100px) { .quests { grid-template-columns: 1fr 1fr; gap: 18px } .quests p { font-size: .9rem } .demo canvas { height: 100px } }
+@media (max-height: 760px) and (min-width: 861px) { .side .info-win { display: none } }
+@media (prefers-reduced-motion: reduce) { .orb, .cmd button::before { animation: none !important } }
