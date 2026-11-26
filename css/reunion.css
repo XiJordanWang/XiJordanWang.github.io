@@ -1,0 +1,73 @@
+/* Colour and type pass: deep royal blue, thin glowing lines and a clean sans, in the spirit of a modern RPG menu.
+   Loaded last so it only overrides colours, borders and fonts; the layout stays in the other files. */
+:root {
+  --void: #020A3A; --ink: #FFFFFF; --muted: #A9C2F2; --gold: #F2E36B;
+  --line: rgba(120,170,255,.55); --line-soft: rgba(120,170,255,.22); --glow: #7FB2FF;
+  --hp: #5A9BFF; --mp: #E25BD6; --ap: #E9DA4F;
+  --pixel: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --term: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --code: "Share Tech Mono", ui-monospace, monospace;
+}
+body { background: radial-gradient(1400px 800px at 60% 30%, #12309A 0%, #0A1E73 40%, var(--void) 100%) }
+.backdrop img { filter: saturate(.6) brightness(.45) }
+.backdrop::after { background: linear-gradient(90deg, rgba(10,30,115,.82) 0%, rgba(8,24,100,.88) 50%, rgba(4,14,70,.94) 100%) }
+
+/* windows: no heavy frame, just a thin light-blue line on translucent blue */
+.win { background: linear-gradient(180deg, rgba(20,50,150,.38), rgba(6,20,90,.55)); border: 1px solid var(--line); border-radius: 2px;
+  box-shadow: inset 0 1px 0 rgba(160,200,255,.18), 0 0 18px rgba(60,120,255,.12) }
+.win h2, .label { font-weight: 600; letter-spacing: .1em; color: var(--muted) }
+.topbar, .helpbar { background: linear-gradient(90deg, rgba(4,14,70,.85), rgba(10,30,115,.4)); border-color: var(--line) }
+.topbar .t, .helpbar .t { font-weight: 400; letter-spacing: .06em }
+.helpbar .help { text-align: center }
+
+/* command menu: white text, a light bar that fades to the right on the selected item */
+.cmd button { font-weight: 400; text-transform: none; letter-spacing: .02em; font-size: 1.15rem; color: #E6EEFF; border-right: 0;
+  background: linear-gradient(90deg, rgba(40,70,170,.35), rgba(40,70,170,0)); border-bottom: 1px solid var(--line-soft) }
+.cmd button:hover { background: linear-gradient(90deg, rgba(90,140,255,.35), rgba(90,140,255,0)) }
+.cmd button.cursor { color: #fff; background: linear-gradient(90deg, rgba(110,160,255,.85), rgba(70,120,240,.35) 60%, rgba(70,120,240,0)); box-shadow: inset 3px 0 0 #DCE9FF }
+.cmd button.cursor::after { background: linear-gradient(90deg, rgba(255,255,255,.7), transparent) }
+.cmd button[aria-current="true"]::before, .cmd button[aria-current="true"]:focus-visible::before { width: 5px; height: 5px; border-radius: 50%; transform: translateY(-50%); background: #fff;
+  filter: drop-shadow(0 0 4px var(--glow)) }
+
+.btn { background: rgba(6,20,90,.55); border: 1px solid var(--line); border-radius: 2px; font-weight: 600; letter-spacing: .06em }
+.btn:hover { background: rgba(90,140,255,.3) }
+
+/* status card: name and level on a fading bar, values on thin underlines instead of white boxes */
+.namebar { background: linear-gradient(90deg, rgba(110,160,255,.35), rgba(110,160,255,0)); border-left: 3px solid #DCE9FF; border-radius: 0 }
+.namebar h1 { font-weight: 600; font-size: 1.5rem; letter-spacing: .02em }
+.namebar .lvl { font-weight: 700; font-size: 1.3rem }
+.tg, .stat .tg, .ib .tg { background: none; color: var(--muted); font-weight: 600; letter-spacing: .1em; clip-path: none }
+.box { background: none; color: #fff; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; font-weight: 600 }
+.box .bar { border: 0; background: rgba(255,255,255,.12); height: 4px }
+.bar { border-color: var(--line-soft); background: rgba(2,10,58,.6); border-radius: 0; height: 5px }
+.bar i, .box .bar i { background: linear-gradient(90deg, #3E7BFF, var(--hp)) }
+.bar.mp i { background: linear-gradient(90deg, #B83ACB, var(--mp)) }
+.bar.ex i { background: linear-gradient(90deg, #C9B93A, var(--ap)) }
+.p-right { background: rgba(2,10,58,.35); border: 1px solid var(--line-soft); border-radius: 0; color: #fff }
+.p-right dt { font-weight: 400 } .p-right dd { color: var(--muted) }
+.p-right dt::before { background: var(--glow) }
+.ib { background: none; border: 0; border-bottom: 1px solid var(--line); border-radius: 0 }
+.ib span:last-child { font-weight: 600 }
+.limit { color: var(--muted); font-weight: 600 }
+.limit .lg { background: rgba(2,10,58,.7); border-color: var(--line-soft) }
+.portrait { border-color: var(--line) !important; border-radius: 0 }
+
+/* lists, tags and form fields */
+.tag, .chips span, .qs button { background: rgba(2,10,58,.5); border-color: var(--line-soft); border-radius: 2px }
+.demo, .slot { background: rgba(2,10,58,.4); border-color: var(--line-soft); border-radius: 2px }
+form.msg input, form.msg textarea { background: rgba(2,10,58,.6); border-color: var(--line); border-radius: 2px }
+.quest h3, .detail h3, .edu h3, .slot header, .log ol button b, .qlist b { font-weight: 600; letter-spacing: .01em }
+.detail .where, .edu .when { color: var(--glow) }
+a { color: #9CC4FF }
+a:focus-visible, button:focus-visible { outline-color: #DCE9FF }
+
+/* code-like readouts keep a monospace face */
+.readout, .events, .trace, .cites { font-family: var(--code) }
+.trace, .readout b { color: #8FD0FF }
+
+/* limit break window */
+.lb-win { background: linear-gradient(180deg, #12309A, #061660); border: 1px solid var(--line); border-radius: 2px; box-shadow: 0 0 40px rgba(90,140,255,.45) }
+.lb-title b { color: var(--ap) }
+
+.helpbar .keys kbd { border-color: var(--line); border-radius: 2px }
